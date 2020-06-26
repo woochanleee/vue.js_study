@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+  <body>
+    <div id="simple">
+      <!-- <input type="text" v-bind:placeholder="message" /> -->
+      <input type="text" :value="message" />
+      <br />
+      <img v-bind:src="imagePath" />
+      <script type="text/javascript">
+        var model = {
+          message: "v-bind 디렉티브",
+          imagePath: "http://sample.bmaster.kro.kr/photos/61.jpg",
+        };
+
+        new Vue({
+          el: "#simple",
+          data: model,
+        });
+      </script>
+    </div>
+  </body>
+</html>
