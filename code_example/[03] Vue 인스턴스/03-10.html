@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #list {
+        width: 600px;
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      #list td,
+      #list th {
+        border: 1px solid black;
+        text-align: center;
+      }
+      #list > thead > tr {
+        color: yellow;
+        background-color: purple;
+      }
+      [v-cloak] > * {
+        display: none;
+      }
+      [v-cloak]::before {
+        content: '로딩중...';
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.4/fetch.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.min.js"></script>
+  </head>
+  <body>
+    <!-- 
+      콧수염 표현식의 템플릿 문자열이 잠깐 나타났다 사라지는 경우가 있다. 나는 그런 현상을 보진 못했는데, 이걸 보이지 않게 하려면
+      v-cloak을 사용하면 된다.
+
+      동작원리:
+        1. 브라우저에서 페이지 소스 로딩
+        2. Vue.js 프레임워크를 실행
+        3. Vue.js 처리 완료
+
+        위 과정에서 Vue.js가 처리되기 이 전 화면에는 {{ }} 표현식 또는 v-if 등을 사용해 보여주지 않을 내용들이 그대로 노출되게 된다..
+        Vue단에서 렌더링 되기 전 까지의 아주 잠깐이지만 어쩔 수 없는 과정이다. 이를 피하기 위해 사용한다.
+
+        v-cloak을 엘리먼트에 적용하면 Vue.js 처리가 완료된 후 v-cloak 디렉티브를 스스로 제거하게 된다.
+        다시 말해서 태그에서는 v-cloak이라는 속성을 제거하게됨.
+     -->
+    <div id="example" v-cloak>
+      <p>
+        이름 :
+        <input type="text" v-model="name" placeholder="두자 이상 입력하세요" />
+      </p>
+      <table id="list">
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>이름</th>
+            <th>전화번호</th>
+            <th>주소</th>
+          </tr>
+        </thead>
+        <tbody id="contacts">
+          <tr v-for="contact in contactlist">
+            <td>{{ contact.no }}</td>
+            <td>{{ contact.name }}</td>
+            <td>{{ contact.tel }}</td>
+            <td>{{ contact.address }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div v-show="isProcessing === true">조회중</div>
+    </div>
+
+    <script text="text/javascript">
+      const vm = new Vue({
+        el: '#example',
+        data: {
+          name: '',
+          isProcessing: false,
+          contactlist: [],
+        },
+        watch: {
+          name(val) {
+            if (val.length >= 2) {
+              this.fetchContacts();
+            } else {
+              this.contactlist = [];
+            }
+          },
+        },
+        methods: {
+          fetchContacts: _.debounce(function () {
+            this.contactlist = [];
+            this.isProcessing = true;
+            const url =
+              'http://localhost:3000/contacts_long/search/' + this.name; // http://sample.bmaster.kro.kr/ 로 하면 안돼서 https://github.com/stepanowon/contactsvc 클론받고 로컬로 서버 돌려서 해결
+            const vm = this;
+            fetch(url, {
+              method: 'GET',
+            })
+              .then((response) => {
+                console.log(response);
+                return response.json();
+              })
+              .then((json) => {
+                vm.contactlist = json;
+                vm.isProcessing = false;
+              })
+              .catch((err) => {
+                console.log('parsing failed', err);
+                vm.contactlist = [];
+                vm.isProcessing = false;
+              });
+          }, 300),
+        },
+      });
+    </script>
+  </body>
+</html>
