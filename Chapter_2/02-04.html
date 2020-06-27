@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+  <body>
+    <div id="simple">
+      <input type="text" v-model="name" placeholder="이름을 입력하세요." />
+      <!-- <input type="checkbox" v-model="name" /> -->
+      <br />
+      입력된 이름:
+      <h2 v-text="name"></h2>
+      <script type="text/javascript">
+        var twoway = new Vue({
+          // data를 Vue 모델 객체 참조를 통해 name값을 얻을수 있음. ex) twoway.name
+          el: '#simple',
+          data: {
+            name: '',
+          },
+        });
+      </script>
+    </div>
+  </body>
+</html>
