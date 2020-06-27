@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+
+  <body>
+    <div id="example">
+      <!-- 
+        v-once: 처음 한번만 렌더링 수행.
+        - Vue 인스턴스의 데이터를 수정해도 렌더링 수행 안함.
+        - 초깃값이 주어지면 변경되지 않는 UI를 만들 때 사용할 수 있음.
+       -->
+      <span v-once>{{ message }}</span>
+    </div>
+    <script text="text/javascript">
+      let vm = new Vue({
+        el: '#example',
+        data: {
+          message: 'Hello, World!',
+        },
+      });
+    </script>
+  </body>
+</html>
