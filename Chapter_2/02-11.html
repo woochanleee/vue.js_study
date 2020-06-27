@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+
+  <body>
+    <div id="example">
+      <!-- 
+        v-pre: 바인딩하지 않고 {{ message }} 문자열을 그대로 출력
+       -->
+      <span v-pre>{{ message }}</span>
+    </div>
+    <script text="text/javascript">
+      new Vue({
+        el: '#example',
+        data: {
+          message: 'Hello, World!',
+        },
+      });
+    </script>
+  </body>
+</html>
