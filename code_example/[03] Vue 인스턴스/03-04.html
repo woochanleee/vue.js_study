@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+
+  <body>
+    <div id="example">
+      <input type="text" v-model="num" /><br />
+      <!-- 1부터 입력된 수 까지의 합 : <span>{{ sum }}</span> -->
+      <!-- computed -->
+      1부터 입력된 수 까지의 합 : <span>{{ sum() }}</span>
+      <!-- methods -->
+      <!-- 
+        ()가 있고 없고의 차이이기 때문에 코드만 봤을땐
+        computed property와 method 를 사용했을 때 차이점을 느끼기 힘듭니다.
+       -->
+    </div>
+    <script text="text/javascript">
+      // 1부터 입력된 수 까지의 합 구하기
+
+      const vm = new Vue({
+        el: '#example',
+        data: {
+          num: 0,
+        },
+        methods: {
+          /*
+            메서드 작성시 주의할점: ES6 문법인 화살표 함수를 사용하면 안된다.
+            화살표 함수 내부에선 this가 Vue 인스턴스를 가리키지 않고,
+            전역 객체(Global Object 또는 브라우저환경이라면 Windows 객체)를 가리키기 떄문이다.
+          */
+          // vm.sum() 을 할때마다 Date.now() 출력됨
+          sum() {
+            console.log(Date.now());
+            let n = Number(this.num);
+            if (Number.isNaN(n) || n < 1) return 0;
+            return (1 + n) * (n / 2);
+          },
+        },
+        // computed: {
+        //   // vm.sum 을 해도 Date.now() 출력 안됨, 캐싱된 값을 출력하고 있음을 의미할 수 있음 -> 이게 계산형 속성과 메서드의 차이
+        //   sum() {
+        //     console.log(Date.now());
+        //     let n = Number(this.num);
+        //     if (Number.isNaN(n) || n < 1) return 0;
+        //     return (1 + n) * (n / 2);
+        //   },
+        // },
+      });
+    </script>
+  </body>
+</html>
