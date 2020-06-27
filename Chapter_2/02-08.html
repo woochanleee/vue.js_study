@@ -34,8 +34,16 @@
           </tr>
         </thead>
         <tbody id="contacts">
-          <tr v-for="contact in contacts">
-            <td>{{ contact.no }}</td>
+          <!-- <tr v-for="contact in contacts"> -->
+          <!-- v-for, v-if 디렉티브는 함께 사용할 수 있다.
+              적용순서를 주의해야 하는데, for가 먼저 수행되고 그 다음 if 가 적용된다.
+              근데, 디렉티브 순서 바꿔도 적용은 된다. 당연한건가?ㅋㅋ
+            -->
+          <tr
+            v-if="contact.address.indexOf('서울') > -1"
+            v-for="(contact, index) in contacts"
+          >
+            <td>{{ index + 1 }}</td>
             <td>{{ contact.name }}</td>
             <td>{{ contact.tel }}</td>
             <td>{{ contact.address }}</td>
