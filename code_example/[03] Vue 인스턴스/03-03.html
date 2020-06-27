@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+
+  <body>
+    <div id="example">금액 : <span>{{ amount }}원</span></div>
+    <script text="text/javascript">
+      const vm = new Vue({
+        el: '#example',
+        data: {
+          amt: 1234567,
+        },
+        computed: {
+          amount: {
+            get() {
+              const s = new String('' + this.amt);
+              let result = '';
+              let num = 0;
+              for (let i = s.length - 1; i >= 0; i--) {
+                result = s[i] + result;
+                if (num % 3 === 2 && i !== 0) result = ',' + result;
+                num++;
+              }
+              return result;
+            },
+            set(amt) {
+              // typeof() 이렇게 쓰는건 처음 봤네
+              if (typeof amt === 'string') {
+                let result = parseInt(amt.replace(/,/g, ''));
+                if (isNaN(result)) this.amt = 0;
+                else this.amt = result;
+              } else if (typeof amt === 'number') this.amt = amt;
+            },
+            // vm.amount = '1000000' // 금액 : 1,000,000원
+            // vm.amount = '1,000,000' // 금액 : 1,000,000원
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
