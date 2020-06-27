@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #list {
+        width: 400px;
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      #list td,
+      #list th {
+        border: 1px solid black;
+        text-align: center;
+      }
+      #list > thead > tr {
+        color: yellow;
+        background-color: purple;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+
+  <body>
+    <div id="example">
+      <p>국가명 : <input type="text" placeholder="국가명" /></p>
+      <table id="list">
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>국가명</th>
+            <th>수도</th>
+            <th>지역</th>
+          </tr>
+        </thead>
+        <tbody id="contacts"></tbody>
+      </table>
+    </div>
+    <script text="text/javascript"></script>
+  </body>
+</html>
