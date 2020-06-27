@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+  <body>
+    <div id="example">
+      x : <input type="text" v-model="x" /><br />
+      y : <input type="text" v-model="y" /><br />
+      덧셈 결과 : {{ sum }}
+    </div>
+    <script text="text/javascript">
+      /*
+      관찰 속성(Watched Property) 은 값이 바뀔 때마다 매번 함수가 호출되는 단점이 있다. 이 예제에는 굳이 사용할 필요없음
+      이런 경우 계산형 속성(Computed Property) 가 더 효과적이다.
+      */
+      const vm = new Vue({
+        el: '#example',
+        data: {
+          x: 0,
+          y: 0,
+          sum: 0,
+        },
+        watch: {
+          x(v) {
+            // x 속성이 변경될 때 호출되는 함수, 파라미터 v 는 변경된 x 속성의 값을 의미
+            console.log('## x 변경');
+            const result = Number(v) + Number(this.y);
+            if (isNaN(result)) this.sum = 0;
+            else this.sum = result;
+          },
+          y(v) {
+            console.log('## y 변경');
+            this.y = v;
+            const result = Number(v) + Number(this.x);
+            if (isNaN(result)) this.sum = 0;
+            else this.sum = result;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
