@@ -5,9 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.4/fetch.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.min.js"></script>
   </head>
   <body>
-    <div></div>
+    <!-- 
+      loadsh
+      -> _.debounce(): 짧은 시간에 너무 많은 API 요청이 일어나는걸 막음
+      
+      es6-promise
+      -> IE 브라우저에서 Promise 객체를 이용하기 위한 폴리필
+     -->
+    <div id="example"></div>
     <script text="text/javascript"></script>
   </body>
 </html>
