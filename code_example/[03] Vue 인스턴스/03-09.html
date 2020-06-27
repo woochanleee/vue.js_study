@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #list {
+        width: 600px;
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      #list td,
+      #list th {
+        border: 1px solid black;
+        text-align: center;
+      }
+      #list > thead > tr {
+        color: yellow;
+        background-color: purple;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.4/fetch.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.min.js"></script>
+  </head>
+  <body>
+    <!-- 
+      loadsh
+      -> _.debounce(): 짧은 시간에 너무 많은 API 요청이 일어나는걸 막음
+      
+      es6-promise
+      -> IE 브라우저에서 Promise 객체를 이용하기 위한 폴리필
+     -->
+    <div id="example">
+      <p>
+        이름 :
+        <input type="text" v-model="name" placeholder="두자 이상 입력하세요" />
+      </p>
+      <table id="list">
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>이름</th>
+            <th>전화번호</th>
+            <th>주소</th>
+          </tr>
+        </thead>
+        <tbody id="contacts">
+          <tr v-for="contact in contactlist">
+            <td>{{ contact.no }}</td>
+            <td>{{ contact.name }}</td>
+            <td>{{ contact.tel }}</td>
+            <td>{{ contact.address }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div v-show="isProcessing === true">조회중</div>
+    </div>
+
+    <script text="text/javascript">
+      const vm = new Vue({
+        el: '#example',
+        data: {
+          name: '',
+          isProcessing: false,
+          contactlist: [],
+        },
+        watch: {
+          name(val) {
+            if (val.length >= 2) {
+              this.fetchContacts();
+            } else {
+              this.contactlist = [];
+            }
+          },
+        },
+        methods: {
+          /* 
+            이 예제는 계산형 속성(Computed Property)으로 구현할 수 없습니다. 계산형 속성은 값을 직접 리턴해야 하기 때문입니다.
+            그렇기 때문에 동기적 처리만 수행할 수 있습니다. 비동기 처리가 필요한 경우라면 관찰 속성을 사용하거나 이벤트 처리 방법을
+            적용하면 됩니다.
+          */
+          fetchContacts: _.debounce(function () {
+            // 300ms 동안 연속적인 호출이 발생하지 않으면 API 호출
+            this.contactlist = [];
+            this.isProcessing = true;
+            const url =
+              'http://localhost:3000/contacts_long/search/' + this.name; // http://sample.bmaster.kro.kr/ 로 하면 안돼서 https://github.com/stepanowon/contactsvc 클론받고 로컬로 서버 돌려서 해결
+            const vm = this;
+            fetch(url, {
+              method: 'GET',
+            })
+              .then((response) => {
+                console.log(response);
+                return response.json();
+              })
+              .then((json) => {
+                vm.contactlist = json;
+                vm.isProcessing = false;
+              })
+              .catch((err) => {
+                console.log('parsing failed', err);
+                vm.contactlist = [];
+                vm.isProcessing = false;
+              });
+          }, 300),
+        },
+      });
+    </script>
+  </body>
+</html>
