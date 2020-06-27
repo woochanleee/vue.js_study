@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+
+  <body>
+    <div id="simple1">
+      <div>좋아하는 과일을 모두 골라주세요 :</div>
+      <input type="checkbox" value="hello?" v-model="fruits" /><span>사과</span>
+      <input type="checkbox" value="2" v-model="fruits" /><span>키워</span>
+      <input type="checkbox" value="3" v-model="fruits" /><span>포도</span>
+      <input type="checkbox" value="4" v-model="fruits" /><span>수박</span>
+      <input type="checkbox" value="5" v-model="fruits" /><span>참외</span>
+    </div>
+    <hr />
+    <div id="simple2">
+      <span>선택한 과일들 : </span><span v-text="fruits"></span>
+    </div>
+    <div id="modifier">
+      <input type="text" v-model.lazy="text" />
+      <p>{{ text }}</p>
+      <!-- lazy change 이벤트가 발생할때 데이터가 반연됨,
+        change: input 값이 변경되고 포커스가 해제되거나 엔터를 누를시 단, 조건 input의 값이 변경되었을 경우
+        blur: input이 포커스 해제될때 발생, input 값에 상관 없음
+       -->
+      <input type="text" v-model.number="number" />
+      <p v-text="typeof number"></p>
+      <span>{{ number }}</span>
+      <!-- 
+        input type="number" 인 경우도 결과는 문자열임
+        abc  //  'String'
+        ab123  //  'String'
+        123  //  'Number'
+        123abc  //  'Number' 단 뒤의 문자는 무시됨
+       -->
+      <input type="text" v-model.trim="trim" />
+      <p v-text="'*' + trim + '*'"></p>
+      <!-- 맨 앞뒤 공백 제거 -->
+    </div>
+    <script text="text/javascript">
+      var model = {
+        fruits: [],
+      };
+
+      var simpl1 = new Vue({
+        el: '#simple1',
+        data: model,
+      });
+
+      var simple2 = new Vue({
+        el: '#simple2',
+        data: model,
+      });
+
+      var modifier = new Vue({
+        el: '#modifier',
+        data: {
+          text: '',
+          number: 0,
+          trim: '',
+        },
+      });
+    </script>
+  </body>
+</html>
