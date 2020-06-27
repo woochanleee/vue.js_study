@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+
+  <body>
+    <div id="test">{{ name }}</div>
+    <script text="text/javascript">
+      /*
+        model.name // "이우찬"
+        vm.name // "이우찬"
+        vm.$data.name // "이우찬", 내장 옵션들은 모두 $식별자를 앞에 붙여서 이름 충돌을 피한다.
+      */
+      const model = {
+        name: '이우찬',
+      };
+      /*
+        el: Vue 인스턴스에 연결할 HTML DOM 요소를 지정,
+        주의할점은 여러개의 요소를 연결할수 없다는 것.
+        지금까지 el값으로 CSS 선택자를 사용했는데 클래스 선택자를 사용해도 여러 요소중 첫 번째 요소에만 연결됨.
+
+        실행 도중 동적으로 Vue 인스턴스와 HTML 요소를 연결할 수 있지만,
+        가능하면 el 옵션은 Vue 인스턴스를 생성할 때 미리 지정할 것을 권장함.
+        어짜피 Vue 인스턴스가 HTML 요소와 연결되면 도중에 연결된 요소를 변경할 수 없다.
+        
+        vm.$mount('#test') 와 같이 $mount()를 이용해 동적으로 연결할 수 있다.
+      */
+      const vm = new Vue({
+        el: '#test',
+        data: model,
+      });
+    </script>
+  </body>
+</html>
