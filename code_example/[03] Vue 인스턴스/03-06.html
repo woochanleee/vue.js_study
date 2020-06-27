@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+  <body>
+    <div id="example">
+      x : <input type="text" v-model="x" /><br />
+      y : <input type="text" v-model="y" /><br />
+      덧셈 결과 : {{ sum }}
+    </div>
+    <script text="text/javascript">
+      const vm = new Vue({
+        el: '#example',
+        data: {
+          x: 0,
+          y: 0,
+        },
+        computed: {
+          sum() {
+            const result = Number(this.x) + Number(this.y);
+            if (isNaN(result)) return 0;
+            else return result;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
+<!-- 
+  누가 봐도 관찰 속성(Watched Property) 보다 계산형 속성(Computed Property) 이 더 편리하고 간단해 보인다.
+  또한 계산형 속성 sum이 참조될 때만 해당 함수가 호출된다. 하지만 관찰 속성이 유용한 경우도 있다. 예를 들어, 긴 시간이 필요한
+  비동기 처리가 필요할 때는 관찰 속성이 대단히 유용하다. <- 이건 어떻게 쓰이는지 잘 모르겠는데 다음 예제가 api이용하는 거니까
+  거기서 확인해 봐야겠다.
+
+  비동기 처리의 가장 대표적인 예는 외부 서버와의 통신기능이다. 통신을 하는 라이브러리는 jQuery의 AJAX 기능,
+  promise 기반의 HTTP Client 기능을 수행하는 axios, fetch 등 많이 있다. Vue.js의 생태계를 통해 제공되는
+  vue-resource라는 것도 있다. fetch()는 firefox 39, chrome 42 버전부터 기본 지원 되는 라이브러리이지만
+  하위 브라우저나 IE도 지원해주기 위해 fetch polyfill을 이용할 것이다.
+  
+  polyfill: 폴리필(polyfill)은 특정 기능이 지원되지 않는 하위 버전의 브라우저를 위해 사용할 수 있도록 만든
+  플러그인 이다.
+ -->
