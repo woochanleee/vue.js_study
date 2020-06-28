@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+  <body>
+    <!-- 
+      이렇게 했을때 값이 제대로 안나왔는데, 구글링 해보니까 다음 예제에서 나오는 script태그를 사용해야 하는것 같다.
+     -->
+    <template id="helloTemplate">
+      <div>Hello Vue.js!!!</div>
+    </template>
+  </body>
+  <script type="text/javascript">
+    Vue.component('hello-component', {
+      template: '#helloTemplate',
+    });
+  </script>
+</html>
