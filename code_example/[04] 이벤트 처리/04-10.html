@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #list {
+        width: 600px;
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      #list td,
+      #list th {
+        border: 1px solid black;
+        text-align: center;
+      }
+      #list > thead > tr {
+        color: yellow;
+        background-color: purple;
+      }
+      [v-cloak] > * {
+        display: none;
+      }
+      [v-cloak]::before {
+        content: '로딩중...';
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.4/fetch.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.min.js"></script>
+  </head>
+  <body>
+    <div id="example" v-cloak>
+      <p>
+        이름 :
+        <!-- <input
+          type="text"
+          v-model="name"
+          placeholder="두자 이상 입력하세요"
+          v-on:keyup.13="search"
+        /> -->
+        <!-- <input
+          type="text"
+          v-model="name"
+          placeholder="두자 이상 입력하세요"
+          v-on:keyup.enter="search"
+        /> -->
+
+        <!-- 
+          수식어들을 모두 keyup 이벤트에 적용할 수 있다. 키코드 수식어들도 여러 개를 결합하여 사용할 수 있다.
+          
+          아래는 cmd + c 했을때 동작함
+         -->
+        <input
+          type="text"
+          v-model="name"
+          placeholder="두자 이상 입력하세요"
+          v-on:keyup.91.67="search"
+        />
+      </p>
+      <table id="list">
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>이름</th>
+            <th>전화번호</th>
+            <th>주소</th>
+          </tr>
+        </thead>
+        <tbody id="contacts">
+          <tr v-for="contact in contactlist">
+            <td>{{ contact.no }}</td>
+            <td>{{ contact.name }}</td>
+            <td>{{ contact.tel }}</td>
+            <td>{{ contact.address }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div v-show="isProcessing === true">조회중</div>
+    </div>
+
+    <script text="text/javascript">
+      const vm = new Vue({
+        el: '#example',
+        data: {
+          name: '',
+          isProcessing: false,
+          contactlist: [],
+        },
+        methods: {
+          search(e) {
+            console.log(e.keyCode);
+            const val = e.target.value;
+            if (val.length >= 2) this.fetchContacts();
+            else this.contactlist = [];
+          },
+          fetchContacts() {
+            this.contactlist = [];
+            this.isProcessing = true;
+            const url =
+              'http://localhost:3000/contacts_long/search/' + this.name;
+            const vm = this;
+            fetch(url, {
+              method: 'GET',
+            })
+              .then((response) => {
+                console.log(response);
+                return response.json();
+              })
+              .then((json) => {
+                vm.contactlist = json;
+                vm.isProcessing = false;
+              })
+              .catch((err) => {
+                console.log('parsing failed', err);
+                vm.contactlist = [];
+                vm.isProcessing = false;
+              });
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
