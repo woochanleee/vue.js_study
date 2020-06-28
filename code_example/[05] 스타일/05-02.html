@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+  <body>
+    <!-- 
+      Vue.js 에서 인라인 스타일은 v-bind:style로 작성한다.
+      주의할점은 케밥 표기법(kebab casing)이 아닌 카멜 표기법을 사용해야 한다.
+      또한 ; 가 아닌 , 기호를 이용해 구분한다.
+     -->
+    <div id="example">
+      <button
+        id="a"
+        v-bind:style="style1"
+        @mouseover.stop="overEvent"
+        @mouseout.stop="outEvent"
+      >
+        테스트
+      </button>
+    </div>
+    <script text="text/javascript">
+      new Vue({
+        el: '#example',
+        data: {
+          style1: {
+            backgroundColor: 'aqua',
+            border: '1px solid gray',
+            width: '100px',
+            textAlign: 'center',
+          },
+        },
+        methods: {
+          overEvent(e) {
+            this.style1.backgroundColor = 'purple';
+            this.style1.color = 'yellow';
+          },
+          outEvent(e) {
+            this.style1.backgroundColor = 'aqua';
+            this.style1.color = 'black';
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
