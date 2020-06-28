@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <hello-component></hello-component>
+      <hello-component />
+      <h1>test</h1>
+      <hello-component></hello-component>
+      <hello-component></hello-component>
+      <!-- 
+        <hello-component /> 이렇게 사용하면 값이 안나타나네..?
+        자세히 설명하자면 <hello-component /> 뒤에 있는 태그들이 안나옴
+        <hello-component /> 까지는 나옴
+        <h1>test</h1> 도 출력이 안됨
+        어떻게 작동하는거지...
+       -->
+    </div>
+  </body>
+  <script type="text/javascript">
+    Vue.component('hello-component', {
+      template: '<div>Hello, Vue.js!</div>', // 템플릿 문자열을 사용했다. 이런 방식을 인라인 템플릿(inline template)이라고 한다.
+      // 사실 이 방법은 권장되지 않지만 처음 작성하는 예제이므로 이 방식을 사용했다.
+    });
+
+    new Vue({
+      el: '#app',
+    });
+  </script>
+</html>
+
+<!-- 
+  live-server 설치
+  Vue.js devtools는 파일 URL로 실행해도 사용할 수 있다. 하지만 코드를 변경하고 재실행하려면 매번 새로 고침을 눌러야 하는데 이럴때
+  live-server를 사용해 핫리로딩(Hot Reloading)기능을 이용한다.
+ -->
