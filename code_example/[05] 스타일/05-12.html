@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      ul {
+        margin: 0;
+        padding: 0;
+      }
+      ul li {
+        cursor: pointer;
+        position: relative;
+        padding: 8px 8px 8px 40px;
+        background: #eee;
+        font-size: 14px;
+        transition: 0.2s;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      ul li:hover {
+        background-color: #ddd;
+      }
+      ul li.checked {
+        background-color: #bbb;
+        color: #fff;
+        text-decoration: line-through;
+      }
+      ul li.checked::before {
+        /* 체크 모양을 이렇게 한다고? 개쩐다... */
+        content: '';
+        position: absolute;
+        border-color: #fff;
+        border-style: solid;
+        border-width: 0 1px 1px 0;
+        top: 10px;
+        left: 16px;
+        transform: rotate(45deg);
+        width: 8px;
+        height: 8px;
+      }
+      .close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 8px 16px;
+      }
+      .close:hover {
+        background-color: #f44336;
+        color: white;
+      }
+      .header {
+        background-color: purple;
+        padding: 30px;
+        color: yellow;
+        text-align: center;
+      }
+      .header:after {
+        content: '';
+        display: table;
+        clear: both;
+      }
+      .input {
+        border: none;
+        width: 75%;
+        height: 35px;
+        padding: 10px;
+        float: left;
+        font-size: 16px;
+      }
+      .add-button {
+        padding: 10px;
+        width: 25%;
+        height: 35px;
+        background-color: #d9d9d9;
+        color: #555;
+        float: left;
+        text-align: center;
+        font-size: 13px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      .add-button:hover {
+        background-color: #bbb;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+  <body>
+    <div id="todolist-app">
+      <div id="header" class="header">
+        <h2>Todo List App</h2>
+        <input
+          class="input"
+          type="text"
+          id="task"
+          placeholder="입력 후 엔터!"
+          v-model.trim="todo"
+          v-on:keyup.enter="addTodo"
+          ref="task"
+        />
+        <!-- 
+          Vue 에서 ref를 등록해주면 Vue 인스턴스.$refs.[ref 변수명] 으로 dom을 참조할수 있다.
+          이건 추가 버튼 클릭시 포커스 효과를 주기위해 그냥 내가 구글링 해봤다.
+         -->
+        <span class="add-button" @click="addTodo">추 가</span>
+      </div>
+      <ul id="todolist">
+        <li
+          v-for="todo in todolist"
+          v-bind:class="checked(todo.done)"
+          v-on:click="doneToggle(todo.id)"
+        >
+          <span>{{ todo.todo }}</span>
+          <span v-if="todo.done"> (완료)</span>
+          <span class="close" v-on:click.stop="deleteTodo(todo.id)">
+            &#x00D7;
+          </span>
+        </li>
+      </ul>
+    </div>
+    <script text="text/javascript">
+      const vm = new Vue({
+        el: '#todolist-app',
+        data: {
+          todo: '',
+          todolist: [
+            { id: 1, todo: '영화보기', done: false },
+            { id: 2, todo: '주말 산책', done: true },
+            { id: 3, todo: 'ES6 학습', done: false },
+            { id: 4, todo: '잠실 야구장', done: false },
+          ],
+        },
+        methods: {
+          checked(done) {
+            if (done) return { checked: true };
+            else return { checked: false };
+          },
+          addTodo() {
+            if (this.todo !== '') {
+              this.todolist.push({
+                id: new Date().getTime(),
+                todo: this.todo.trim(),
+                done: false,
+              });
+              this.todo = ''; // todo 추가시 input 초기화 기능 추가
+              this.$refs.task.focus();
+            }
+          },
+          deleteTodo(id) {
+            const index = this.todolist.findIndex((t) => t.id === id);
+            this.todolist.splice(index, 1);
+          },
+          doneToggle(id) {
+            const index = this.todolist.findIndex((t) => t.id === id);
+            this.todolist[index].done = !this.todolist[index].done;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
