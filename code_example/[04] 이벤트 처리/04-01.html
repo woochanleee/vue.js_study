@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    <style>
+      .layout1 {
+        margin: 30px;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+  <body>
+    <div id="example" class="container layout1">
+      <p><input type="text" v-model="amount" class="form-control" /></p>
+      <p>
+        <!-- 
+          당연한 말이지만, Vue.js는 Vue 인스턴스에 등록한 메서드를 이벤트 처리 함수로 연결할수 있다.
+         -->
+        <button
+          id="deposit"
+          @click="balance += parseInt(amount)"
+          class="btn btn-primary"
+        >
+          <!-- <button
+          id="deposit"
+          v-on:click="balance += parseInt(amount)"
+          class="btn btn-primary"
+        > -->
+          예금
+        </button>
+        <button
+          id="wthdraw"
+          v-on:click="balance -= parseInt(amount)"
+          class="btn btn-primary"
+        >
+          인출
+        </button>
+      </p>
+      <h3>계좌 잔고 : {{ balance }}</h3>
+    </div>
+    <script text="text/javascript">
+      const vm = new Vue({
+        el: '#example',
+        data: {
+          amount: 0,
+          balance: 0,
+        },
+      });
+    </script>
+  </body>
+</html>
