@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #outer {
+        width: 200px;
+        height: 200px;
+        border: 2px solid black;
+        background-color: aqua;
+        position: absolute;
+        top: 100px;
+        left: 50px;
+        padding: 10px;
+      }
+      #inner {
+        width: 100px;
+        height: 100px;
+        border: 2px solid black;
+        background-color: yellow;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+  <body>
+    <div id="example">
+      <div id="outer" @click="outerClick">
+        <div id="inner" v-on:click="innerClick"></div>
+      </div>
+    </div>
+    <script text="text/javascript">
+      new Vue({
+        el: '#outer',
+        methods: {
+          outerClick(e) {
+            e.stopPropagation();
+            console.log('### OUTER CLICK');
+            console.log('Event Phase : ', e.eventPhase);
+            console.log('Current Target : ', e.currentTarget);
+            console.log('Target : ', e.target);
+          },
+          innerClick(e) {
+            e.stopPropagation();
+            console.log('### INNER CLICK');
+            console.log('Event Phase : ', e.eventPhase);
+            console.log('Current Target : ', e.currentTarget);
+            console.log('Target : ', e.target);
+          },
+          /*
+            inner를 클릭했지만 outer 까지 이벤트가 전달된것을 볼 수 있다.
+            이때 outer의 eventPhasesms 3(Bubbling)이고, target은 inner div였다.
+
+            버블링 단계에서의 target은 이벤트가 일어난 원본 요소를 가리킨다. 이 속성값을 이용해 의도적으로 버블링을
+            활요하기도 한다.
+
+            하지만 일반적으로 이벤트 버블링은 막아야 할 작업이다. #inner를 클릭했을 때 상위 요소로의 이벤트 전파(Propagation)
+            를 막아야 한다.
+
+            stopPropagtion 메서드도 이벤트 수식어도 대체할 수있다. 관련된 이벤트 수식어는 아래 공식 문서에서 확인할 수 있다.
+            https://kr.vuejs.org/v2/guide/events.html#%EC%9D%B4%EB%B2%A4%ED%8A%B8-%EC%88%98%EC%8B%9D%EC%96%B4
+
+            - .stop: 이벤트 전파를 중단시킨다.
+            - .capture: CAPTURING_PHASE 단계에서만 이벤트가 발생한다.
+            - .self: RASING_PHASE 단계일 때만 이벤트가 발생한다.
+          */
+        },
+      });
+    </script>
+  </body>
+</html>
