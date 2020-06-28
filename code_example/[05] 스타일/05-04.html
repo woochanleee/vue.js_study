@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+  <body>
+    <!-- 
+      스타일 객체를 사용할 때 한 번에 여러 개의 스타일 객체를 바인딩할 수도 있다.
+      사용할 것 같진 않지만 알아두면 도움이 될 것이다.
+      아래서 볼수 있듯이 [] 배열 구조로 사용한다.
+     -->
+    <div id="example">
+      <button id="btn1" v-bind:style="[ myLayout, myColor ]">
+        <!-- 
+          [] 이렇게 할때도 인덱스가 나중인것이 동일 스타일은 덮어 쓴다.
+          근데 style에서는 속성은 둘다 존재하고 밑줄이 그이면서 덮어써졌는데,
+          위 같은 경우엔 그냥 아예 사라져 버린다. 그냥 이렇게 동작하는듯?
+         -->
+        버튼1
+      </button>
+    </div>
+    <script text="text/javascript">
+      new Vue({
+        el: '#example',
+        data: {
+          myColor: {
+            backgroundColor: 'purple',
+            color: 'yellow',
+          },
+          myLayout: {
+            width: '150px',
+            height: '80px',
+            textAlign: 'center',
+            backgroundColor: 'green',
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
