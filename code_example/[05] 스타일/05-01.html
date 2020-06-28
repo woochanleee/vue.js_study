@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .test {
+        background-color: yellow;
+        border: 4px double gray;
+      }
+      .over {
+        background-color: aqua;
+        width: 300px;
+        height: 100px;
+      }
+      /*
+        style태그에 작성된 순서대로 CSS 클래스의 스타일이 적용되고
+        HTML 요소에 style attribute(속성)을 이용한 인라인 스타일이 적용된다.
+        마지막에 적용된 스타일 속성이 적용되고 나머지는 일시적으로 숨겨진다.
+
+        이 예제에서는 .text(3) < .over(2) < inline-style(1)
+        
+        우선순위가 위와 같다. 1, 2, 3 
+       */
+    </style>
+  </head>
+  <body>
+    <div style="background-color: orange;" class="over test"></div>
+  </body>
+</html>
