@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .boxcolor {
+        background-color: orange;
+      }
+      .center {
+        width: 200px;
+        height: 100px;
+        line-height: 100px;
+        text-align: center;
+        border: 1px solid gray;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+  <body>
+    <div id="example">
+      <center-box v-bind:class="boxstyle"></center-box>
+    </div>
+    <script text="text/javascript">
+      Vue.component('center-box', {
+        template: '<div class="center">중앙에 위치</div>',
+      });
+
+      const vm = new Vue({
+        el: '#example',
+        data: {
+          boxstyle: {
+            boxcolor: true,
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
+<!-- 
+  간단한 Vue 컴포넌트는 Vue.component() 를 이용해 작성할 수 있다. 자세한 컴포넌트의 작성 방법,
+  특히 단일 파일 컴포넌트(Single File Component) 에 대해서는 추후에 살펴볼 것이다.
+
+  center-box 라는 이름의 Vue 컴포넌트를 작성했는데 이것은 <center-box></center-box>와 같이
+  사요할 수 있고, 이미 컴포넌트에 클래스가 적용되어 있어도 추가로 클래스를 바인딩 할 수 있다.
+
+  vm.boxstyle.boxcolor = false
+  하는 즉시 색상이 바뀐다.
+ -->
