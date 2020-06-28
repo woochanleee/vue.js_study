@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .set1 {
+        background-color: aqua;
+        color: purple;
+      }
+      .set2 {
+        text-align: center;
+        width: 120px;
+      }
+      .set3 {
+        border: 1px dashed sandybrown;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+  <body>
+    <div id="example">
+      <button id="btn1" v-bind:class="{ set1: s1, set2: s2, set3: s3 }">
+        버튼1
+      </button>
+      <p>
+        <input type="checkbox" v-model="s1" /> set1 디자인
+        <input type="checkbox" v-model="s2" /> set2 디자인
+        <input type="checkbox" v-model="s3" /> set3 디자인
+      </p>
+    </div>
+    <script text="text/javascript">
+      new Vue({
+        el: '#example',
+        data: {
+          s1: false,
+          s2: false,
+          s3: false,
+        },
+      });
+    </script>
+  </body>
+</html>
