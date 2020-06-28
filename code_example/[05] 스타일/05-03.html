@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+  <body>
+    <!-- 
+      v-bind:style 디렉티브를 통해서 개별적인 속성 하나하나를 바인딩 할 수도 있다.
+      그러나 이 방법은 추천하지 않는다. 코드 유지보수가 힘들기 때문이다. 가능하다면
+      전 예제에서 나온 스타일 객체를 직접 바인딩하는 방법을 사용한다.
+     -->
+    <div id="example">
+      <div
+        :style="{ backgroundColor: a.bc, border: a.bd, width: a.w + 'px', height: a.h + 'px' }"
+      ></div>
+    </div>
+    <script text="text/javascript">
+      new Vue({
+        el: '#example',
+        data: {
+          a: {
+            bc: 'yellow',
+            bd: '1px solid gray',
+            w: 200,
+            h: 100,
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
