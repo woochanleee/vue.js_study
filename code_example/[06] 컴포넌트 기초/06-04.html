@@ -9,14 +9,26 @@
   <body>
     <!-- 
       이렇게 했을때 값이 제대로 안나왔는데, 구글링 해보니까 다음 예제에서 나오는 script태그를 사용해야 하는것 같다.
+      
+      아래 new Vue를 안해줘서 그랬던거 였다...ㅎㅎㅎ
+
+      아 이걸 내가 잘못 이해한게, 그냥 template 태그만 써서 작동이 되는게 아니라 이렇게 하면 component가 생성이되고
+      아래처럼 <hello-component></hello-component> 라고 해야 사용이 되는 것이다.
+      <template>안에 있는 것은 진짜 태그이므로 작동이 된거였음
      -->
-    <template id="helloTemplate">
-      <div>Hello Vue.js!!!</div>
-    </template>
+    <div id="app">
+      <template id="helloTemplate">
+        <div>Hello Vue.js!!!</div>
+      </template>
+      <hello-component></hello-component>
+    </div>
   </body>
   <script type="text/javascript">
     Vue.component('hello-component', {
       template: '#helloTemplate',
+    });
+    new Vue({
+      el: '#app',
     });
   </script>
 </html>
