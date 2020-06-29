@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+  <template id="listTemplate">
+    <li>{{ message }}</li>
+  </template>
+  <script type="text/javascript">
+    Vue.component('list-component', {
+      template: '#listTemplate',
+      props: ['message'],
+    });
+  </script>
+  <body>
+    <div id="app">
+      <ul>
+        <list-component message="Hello"></list-component>
+        <list-component message="신짜오"></list-component>
+        <list-component message="니하오마"></list-component>
+      </ul>
+    </div>
+    <script text="text/javascript">
+      Vue.config.devtools = true;
+      new Vue({
+        el: '#app',
+      });
+    </script>
+  </body>
+</html>
