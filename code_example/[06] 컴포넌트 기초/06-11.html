@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+  <template id="timeTemplate">
+    <div>
+      <span>{{ nowTS }}</span>
+      <button v-on:click="timeClick">현재 시간</button>
+    </div>
+  </template>
+  <script type="text/javascript">
+    /*
+    data 옵션에 함수를 지정하더라고 모두 동일한 객체를 참조하도록 할 수 있다. 물론 이 방식을 사용하면 안된다.
+    
+    이러한 이유로 Vue 컴포넌트에서 데이터 옵션에 함수를 지정할 때 리턴값은 반드시 함수 내부에서 선언된 객체여야 한다.
+  */
+    const data = {
+      nowTS: 0,
+    };
+
+    Vue.component('time-component', {
+      template: '#timeTemplate',
+      data() {
+        return data;
+      },
+      methods: {
+        timeClick(e) {
+          this.nowTS = new Date().getTime();
+        },
+      },
+    });
+  </script>
+  <body>
+    <div id="app">
+      <time-component></time-component>
+      <time-component></time-component>
+    </div>
+    <script text="text/javascript">
+      Vue.config.devtools = true;
+      new Vue({
+        el: '#app',
+      });
+    </script>
+  </body>
+</html>
