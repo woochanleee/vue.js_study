@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+  <template id="listTemplate">
+    <li>{{ myMessage }}</li>
+  </template>
+  <script type="text/javascript">
+    Vue.component('list-component', {
+      template: '#listTemplate',
+      props: {
+        myMessage: {
+          type: String,
+          default: '안녕하세요',
+        },
+        count: {
+          type: Number,
+          required: true,
+        },
+        countries: {
+          type: Array,
+          /*
+            속성으로 전달할 값이 배열이나 객체인 경우 기본값을 부여하려면 반드시 함수를 사용해야 한다.
+            data 옵션을 부여할 때 함수의 리턴값으로 부혀했던 것과 같은 맥락으로 생각하면 된다.
+            속성값을 전달할 때는 v-bind 디렉티브를 사용하면 된다.
+          */
+          default: () => ['대한민국'],
+        },
+      },
+    });
+  </script>
+  <body>
+    <div id="app">
+      <ul>
+        <list-component
+          my-message="Hello"
+          v-bind:count="100"
+          v-bind:countries="['미국', '영국', '호주']"
+        ></list-component>
+        <list-component
+          my-message="신짜오"
+          :count="21"
+          v-bind:countries="['베트남']"
+        ></list-component>
+        <list-component
+          my-message="니하오마"
+          v-bind:countries="['중국', '타이완']"
+        ></list-component>
+        <list-component count="1000"></list-component>
+      </ul>
+    </div>
+    <script text="text/javascript">
+      Vue.config.devtools = true;
+      new Vue({
+        el: '#app',
+      });
+    </script>
+  </body>
+</html>
