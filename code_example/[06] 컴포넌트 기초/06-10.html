@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+  <template id="timeTemplate">
+    <div>
+      <span>{{ nowTS }}</span>
+      <button v-on:click="timeClick">현재 시간</button>
+    </div>
+  </template>
+  <script type="text/javascript">
+    Vue.component('time-component', {
+      template: '#timeTemplate',
+      data() {
+        return { nowTS: 0 };
+      },
+      /*
+        정상적으로 렌더링 하려면 data 옵션에 함수가 주어져야 합니다.
+        정확하게 표현하자면 '함수가 호출되어 리턴된 객체가 data 옵션에 주어진다' 라고 할 수 있다.
+      */
+      methods: {
+        timeClick(e) {
+          this.nowTS = new Date().getTime();
+        },
+      },
+    });
+  </script>
+  <body>
+    <div id="app">
+      <time-component></time-component>
+      <time-component></time-component>
+    </div>
+    <script text="text/javascript">
+      Vue.config.devtools = true;
+      new Vue({
+        el: '#app',
+      });
+    </script>
+  </body>
+</html>
