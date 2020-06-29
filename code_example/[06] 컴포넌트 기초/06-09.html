@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+  <template id="timeTemplate">
+    <div>
+      <span>{{ nowTS }}</span>
+      <button v-on:click="timeClick">현재 시간</button>
+    </div>
+  </template>
+  <script type="text/javascript">
+    Vue.component('time-component', {
+      template: '#timeTemplate',
+      data: {
+        nowTS: 0,
+      }, // 책에서는 버튼이 나오긴하는데 지금은 버튼도 렌더링되지 않는다.
+      methods: {
+        timeClick(e) {
+          this.nowTS = new Date().getTime();
+        },
+      },
+    });
+  </script>
+  <body>
+    <div id="app">
+      <time-component></time-component>
+      <time-component></time-component>
+    </div>
+    <script text="text/javascript">
+      Vue.config.devtools = true;
+      new Vue({
+        el: '#app',
+      });
+    </script>
+  </body>
+</html>
