@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+  <template id="listTemplate">
+    <li>{{ myMessage }}</li>
+  </template>
+  <script type="text/javascript">
+    Vue.component('list-component', {
+      template: '#listTemplate',
+      props: {
+        myMessage: {
+          type: String,
+          default: '안녕하세요',
+        },
+        count: {
+          type: Number,
+          required: true,
+        },
+        /*
+          Vue devtools를 보면 count는 Number type이지만 count값이 문자열로 나타난다. 원인은 리터럴로 속성을 전달했기 때문이다.
+          이를 해결하기 위해선 v-bind 디렉티브를 사용한다.
+
+          count에 아예 값이 전달안되면 렌더링에는 문제가 없다.
+          하지만 :count="world" 와 같이 작성하는 경우 world를 변수명으로 간주하여, world라는 변수나 객체가 존재해야 한다. 없으면 오류 발생
+        */
+      },
+    });
+  </script>
+  <body>
+    <div id="app">
+      <ul>
+        <list-component my-message="Hello" v-bind:count="100"></list-component>
+        <list-component my-message="신짜오" :count="21"></list-component>
+        <list-component my-message="니하오마"></list-component>
+        <!-- <list-component
+          my-message="니하오마 world"
+          :count="world"
+        ></list-component> -->
+        <list-component count="1000"></list-component>
+      </ul>
+    </div>
+    <script text="text/javascript">
+      Vue.config.devtools = true;
+      new Vue({
+        el: '#app',
+      });
+    </script>
+  </body>
+</html>
