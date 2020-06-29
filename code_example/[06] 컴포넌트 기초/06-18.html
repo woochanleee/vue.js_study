@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+  <!-- 
+    자식 컴포넌트에서는 이벤트를 발신(emit) 하고 부모 컴포넌트에서 v-on 디렉티브를 이용해 이벤트를 수신한다.
+   -->
+  <!-- child Component 시작 -->
+  <style>
+    .buttonstyle {
+      width: 120px;
+      height: 30px;
+      text-align: center;
+    }
+  </style>
+  <template id="childTemplate">
+    <div>
+      <button
+        class="buttonstyle"
+        v-on:click="clickEvent"
+        v-bind:data-lang="buttonInfo.value"
+      >
+        {{ buttonInfo.text }}
+      </button>
+    </div>
+  </template>
+  <script text="text/javascript">
+    Vue.component('child-component', {
+      template: '#childTemplate',
+      props: ['buttonInfo'],
+      methods: {
+        clickEvent(e) {
+          this.$emit('timeclick', e.target.innerText, e.target.dataset.lang);
+        },
+      },
+    });
+  </script>
+  <!-- child Component 끝 -->
+  <!-- parent Component 시작 -->
+  <template id="parent-template">
+    <div>
+      <child-component
+        v-for="s in buttons"
+        v-bind:button-info="s"
+        v-on:timeclick="timeclickEvent"
+      ></child-component>
+      <hr />
+      <div>{{ msg }}</div>
+    </div>
+  </template>
+  <script type="text/javascript">
+    Vue.component('parent-component', {
+      template: '#parent-template',
+      props: ['buttons'],
+      data: () => ({ msg: '' }),
+      methods: {
+        timeclickEvent(k, v) {
+          this.msg = k + ', ' + v;
+        },
+      },
+    });
+  </script>
+  <!-- parent Component 끝 -->
+  <body>
+    <div id="app">
+      <parent-component v-bind:buttons="buttons"></parent-component>
+    </div>
+    <script text="text/javascript">
+      Vue.config.devtools = true;
+      new Vue({
+        el: '#app',
+        data: {
+          buttons: [
+            { text: 'hello', value: '영어' },
+            { text: '신짜오', value: '베트남어' },
+            { text: '니하오', value: '중국어' },
+          ],
+        },
+      });
+    </script>
+  </body>
+</html>
