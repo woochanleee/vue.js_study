@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+  <template id="listTemplate">
+    <li>{{ myMessage }}</li>
+    <!-- <li>{{ my-message }}</li> 이렇게 하면 안됨, vue devtools에 myMessage로 오는 모습-->
+  </template>
+  <script type="text/javascript">
+    Vue.component('list-component', {
+      template: '#listTemplate',
+      props: ['myMessage'],
+      // props: ['my-message'], // 이렇게 해도 되긴 하는데 왜 될까 그냥 카멜케이스로 써야지
+    });
+    /*
+      컴포넌트 작성 시 속성명을 부여할 때 카멜 표기법(camel casing) 을 사용했다면
+      태그에서 속성명을 사용할 정보를 전달할 때는 반드시 케밥 표기법(kebob casing)을 사용해야 한다.
+      태그 작성 시 특성(attribute)은 대소문자를 구분하지 않기 때문이다.
+    */
+  </script>
+  <body>
+    <div id="app">
+      <!-- 
+        아래 경우엔 vue devtools를 보면
+        props
+        myMessage:undefined
+
+        $attrs
+        mymessage:"신짜오"
+
+        이렇게 값이 전달 된 모습이다.
+        
+        따라서 카멜 표기법 대신 케밥 표기법을 사용해야 한다.
+        근데 이게 또 보니까 props 명은 카멜로 해도 되고
+        html 속성에 케밥으로 하면 자동으로 카멜로 변경되는것 같다.
+        
+       -->
+      <ul>
+        <!-- 
+          카멜로 하면 다 lower로 변환되서 적용됨
+         -->
+        <!-- <list-component myMessage="Hello"></list-component>
+        <list-component myMessage="신짜오"></list-component>
+        <list-component myMessage="니하오마"></list-component> -->
+        <list-component myMessage="신짜오"></list-component>
+        <list-component my-message="Hello"></list-component>
+        <list-component my-message="신짜오"></list-component>
+        <list-component my-message="니하오마"></list-component>
+      </ul>
+    </div>
+    <script text="text/javascript">
+      Vue.config.devtools = true;
+      new Vue({
+        el: '#app',
+      });
+    </script>
+  </body>
+</html>
