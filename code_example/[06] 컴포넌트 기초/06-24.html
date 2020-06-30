@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+  <!-- 이벤트 버스 객체 -->
+  <script type="text/javascript">
+    const eventBus = new Vue();
+  </script>
+  <!-- 첫 번째 자식 컴포넌트 시작 -->
+  <template id="child1Template">
+    <div>
+      <button v-on:click="clickEvent">child1 button!!</button>
+      <div>{{ currentTime }}</div>
+    </div>
+  </template>
+  <script type="text/javascript">
+    Vue.component('child1-component', {
+      template: '#child1Template',
+      data: () => ({ currentTime: '' }),
+      methods: {
+        clickEvent() {
+          const d = new Date();
+          const t = d.toLocaleTimeString() + ' ' + d.getMilliseconds() + 'ms';
+          eventBus.$emit('click1', t);
+          this.currentTime = t;
+        },
+      },
+    });
+  </script>
+  <!-- 첫 번째 자식 컴포넌트 끝 -->
+  <!-- 두 번째 자식 컴포넌트 시작 -->
+  <template id="child2Template">
+    <ul>
+      <li v-for="t in timelist">{{ t }}</li>
+    </ul>
+  </template>
+  <script type="text/javascript">
+    Vue.component('child2-component', {
+      template: '#child2Template',
+      data: () => ({ timelist: [] }),
+      created() {
+        eventBus.$on('click1', this.child1Click);
+      },
+      methods: {
+        child1Click(time) {
+          this.timelist.push(time);
+        },
+      },
+    });
+  </script>
+  <!-- 두 번째 자식 컴포넌트 끝 -->
+  <body>
+    <div id="app">
+      <child1-component></child1-component>
+      <hr />
+      <child2-component></child2-component>
+    </div>
+    <script text="text/javascript">
+      Vue.config.devtools = true;
+      new Vue({
+        el: '#app',
+      });
+    </script>
+  </body>
+</html>
+
+<!-- 
+  부모-자식 관계의 컴포넌트 들은 앞에서 다룬 props와 events를 사용하면 된다. 하지만
+  부모-자식 관계가 아닌 경우, 예를 들어 서로 형제 관계이거나 부모와 손자, 증손자 관계인 컴포넌트들
+  사이에서도 정보를 전달할 수 있는 방법이 있다.
+  
+  이러한 경우에 사용할 수 있는 방법은 이벤트 버스(Event Bus) 객체를 만드는 것이다. 비어 있는
+  Vue 인스턴스르 ㄹ만들어서 사용하면 된다. UI를 만들기 위한 템플릿 문자열이나 데이터 옵션을 포함
+  하지 않을 뿐 Vue 인스턴스 이다.
+ -->
