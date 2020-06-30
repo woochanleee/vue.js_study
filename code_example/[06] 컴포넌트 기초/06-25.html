@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- 공용 스타일 시작 -->
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      .header {
+        background-color: purple;
+        padding: 30px;
+        color: yellow;
+        text-align: center;
+      }
+      .header::after {
+        content: '';
+        display: table;
+        clear: both;
+      }
+      /* 공용 스타일 끝 */
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+  <!-- 이벤트 버스 객체 시작 -->
+  <script>
+    const eventBus = new Vue();
+  </script>
+  <!-- 이벤트 버스 객체 끝 -->
+  <body>
+    <div id="todolist-app">
+      <div id="header" class="header">
+        <h2>Todo List App</h2>
+      </div>
+    </div>
+    <script text="text/javascript">
+      Vue.config.devtools = true;
+      const vm = new Vue({
+        el: '#todolist-app',
+      });
+    </script>
+  </body>
+</html>
