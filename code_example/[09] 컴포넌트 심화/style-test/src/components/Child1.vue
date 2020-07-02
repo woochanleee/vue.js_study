@@ -1,20 +1,33 @@
 <template>
-  <div class="main">
+  <div class="main test">
+    <!-- 위 태그랑 -->
+    {{ msg }}
+    <!-- 아래 태그 둘다 똑같은 data-v-xxxx가 들어감 -->
+    <child11 />
     {{ msg }}
   </div>
 </template>
 
 <script>
+import Child11 from './Child11';
 export default {
   name: 'child1',
   data: () => ({ msg: 'Child1' }),
+  components: {
+    Child11,
+  },
 };
 </script>
 
-<style>
+<style scoped>
 .main {
   border: 1px solid black;
   background-color: yellow;
+}
+.test {
+  padding: 10px;
+  text-decoration: underline;
+  border: 1px solid black;
 }
 </style>
 
