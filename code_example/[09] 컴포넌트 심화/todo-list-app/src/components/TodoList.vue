@@ -30,8 +30,9 @@ import InputTodo from "./InputTodo";
 import List from "./List";
 
 export default {
-  name: "todo-list",
+  name: "todo-list", // name 속성은 컴포넌트의 이름, 필수 값이 아니라 생략 가능
   components: {
+    // InputTodo 컴포넌트는 <input-todo /> 와 같이 작성해야 한다.
     InputTodo,
     List
   }
