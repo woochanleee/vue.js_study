@@ -1,28 +1,23 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h2>{{ msg }}</h2>
+    <child1 />
+    <child2 />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Child1 from './components/Child1';
+import Child2 from './components/Child2';
 
 export default {
-  name: 'App',
+  name: 'app',
   components: {
-    HelloWorld
-  }
-}
+    Child1,
+    Child2,
+  },
+  data: () => ({
+    msg: 'Welcome to Your Vue.js App',
+  }),
+};
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
