@@ -1,6 +1,7 @@
 import Vue from 'vue';
 // import App from './App.vue'
-import App from './AppNamed';
+// import App from './AppNamed';
+import App from './AppScoped';
 
 Vue.config.productionTip = false;
 
