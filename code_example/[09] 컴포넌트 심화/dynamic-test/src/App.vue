@@ -17,10 +17,22 @@
       </nav>
     </div>
     <div class="container">
-      <component v-bind:is="currentView"></component>
+      <!-- <keep-alive include="about,home"> -->
+        <keep-alive exclude="about,home">
+        <!-- include할때 ,(쉼표) 사이에 공백이 있으면 적용이 안된다. -->
+        <component v-bind:is="currentView"></component>
+      </keep-alive>
     </div>
   </div>
 </template>
+<!--
+  실행 결과를 자세히 살펴보면 메뉴를 클릭할 때마다 출력되는 시간 정보가 계속 변경되는 모습이다.
+  매번 실행된다는 의미이다. 만일 <component> 로 표현될 자식 컴포넌트들이 정적 콘텐츠라면 매번
+  실행되는 것은 비효율적이다. 이런 경우엔 <component> 요소를 <keep-alive> 요소로 감싸서 캐싱하면 된다.
+
+  만약 특정 컴포넌트만 캐싱하거나 캐싱하고 싶지 않다면 include, exclude 특성으로 컴포넌트들을 콤마로 구분하여 나열하면 된다.
+  이때 지정된 이름이 있어야 하므로 각 컴포넌트마다 name 옵션을 부여해야 하며 이 이름으로 include, exclude 할 수 있다.
+-->
 
 <script>
 import Home from './components/Home';
