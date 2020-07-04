@@ -119,7 +119,16 @@ export default {
         })
         .catch(err => console.log(err));
     },
-    changePhoto() {}
+    changePhoto() {
+      const data = new FormData();
+      const file = this.$refs.photoFile.files[0];
+
+      data.append("photo", file);
+      axios
+        .post(`/api/contacts/${this.no}/photo`, data)
+        .then(res => (this.result = res.data))
+        .catch(err => console.log(`updatePhoto failed ${err}`));
+    }
   }
 };
 </script>
