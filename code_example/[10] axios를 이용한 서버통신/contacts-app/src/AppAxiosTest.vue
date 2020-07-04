@@ -17,8 +17,8 @@
       <div class="form-group">
         <input type="text" v-model="no" />
         <input type="text" v-model="name" placeholder="이름을 입력합니다." />
-        <input type="text" v-model="name" placeholder="전화번호를 입력합니다." />
-        <input type="text" v-model="name" placeholder="주소를 입력합니다." />
+        <input type="text" v-model="tel" placeholder="전화번호를 입력합니다." />
+        <input type="text" v-model="address" placeholder="주소를 입력합니다." />
         <button @click="updateContact">수정</button>
       </div>
       <div class="form-group">
@@ -93,7 +93,22 @@ export default {
         })
         .catch(err => console.log(err));
     },
-    updateContact() {},
+    updateContact() {
+      axios
+        .put(`/api/contacts/${this.no}`, {
+          name: this.name,
+          tel: this.tel,
+          address: this.address
+        })
+        .then(res => {
+          console.log(res.data);
+          this.name = "";
+          this.tel = "";
+          this.address = "";
+          this.result = res.data;
+        })
+        .catch(err => console.log(err));
+    },
     deleteContact() {},
     changePhoto() {}
   }
