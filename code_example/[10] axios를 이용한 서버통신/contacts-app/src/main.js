@@ -1,6 +1,6 @@
 import Vue from 'vue';
-// import App from './App.vue'
-import App from './AppAxiosTest';
+import App from './App.vue';
+// import App from './AppAxiosTest';
 import axios from 'axios';
 
 Vue.prototype.$axios = axios;
