@@ -70,7 +70,20 @@ export default {
           console.log("ERROR!!! : ", error);
         });
     },
-    addContact() {},
+    addContact() {
+      axios
+        .post("/api/contacts", {
+          name: this.name,
+          tel: this.tel,
+          address: this.address
+        })
+        .then(res => {
+          console.log(res.data);
+          this.result = res.data;
+          this.no = res.data.no;
+        })
+        .catch(err => console.log(err));
+    },
     fetchContactOne() {
       axios
         .get(`/api/contacts/${this.no}`)
