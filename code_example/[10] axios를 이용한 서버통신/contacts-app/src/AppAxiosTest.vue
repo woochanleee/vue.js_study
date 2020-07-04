@@ -71,7 +71,15 @@ export default {
         });
     },
     addContact() {},
-    fetchContactOne() {},
+    fetchContactOne() {
+      axios
+        .get(`/api/contacts/${this.no}`)
+        .then(res => {
+          console.log(res);
+          this.result = res.data;
+        })
+        .catch(err => console.log(err));
+    },
     updateContact() {},
     deleteContact() {},
     changePhoto() {}
