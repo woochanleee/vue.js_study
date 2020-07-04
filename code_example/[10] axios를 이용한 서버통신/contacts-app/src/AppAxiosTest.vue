@@ -39,7 +39,7 @@
 </template>
 
 <script>
-// import axios from "axios";
+import axios from "axios";
 
 export default {
   name: "app",
@@ -53,10 +53,28 @@ export default {
     };
   },
   methods: {
-    fetchContacts() {},
+    fetchContacts() {
+      // axios 저수준 메서드의 특징은 모든 전달값을 config 객체로 전달한다는 점이다.
+      axios({
+        method: "GET",
+        url: "/api/contacts",
+        params: {
+          pageno: 1,
+          pagesize: 5
+        }
+      })
+        .then(response => {
+          console.log(response);
+          this.result = response.data;
+        })
+        .catch(error => {
+          console.log("ERROR!!! : ", error);
+        });
+    },
     addContact() {},
     fetchContactOne() {},
     updateContact() {},
+    deleteContact() {},
     changePhoto() {}
   }
 };
