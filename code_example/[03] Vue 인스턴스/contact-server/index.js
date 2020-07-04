@@ -7,12 +7,12 @@ var cors = require('cors');
 //var fs = require('fs');
 //var rfs = require('rotating-file-stream');
 
-app.use(
-  cors({
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET',
-  })
-);
+// app.use(
+//   cors({
+//     'Access-Control-Allow-Origin': '*',
+//     'Access-Control-Allow-Methods': 'GET',
+//   })
+// );
 app.enable('jsonp callback'); //jsonp 지원
 app.use(function (req, res, next) {
   res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
