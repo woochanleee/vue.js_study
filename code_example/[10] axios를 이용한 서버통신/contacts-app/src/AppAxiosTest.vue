@@ -109,7 +109,16 @@ export default {
         })
         .catch(err => console.log(err));
     },
-    deleteContact() {},
+    deleteContact() {
+      axios
+        .delete(`/api/contacts/${this.no}`)
+        .then(res => {
+          console.log(res);
+          this.no = 0;
+          this.result = res.data;
+        })
+        .catch(err => console.log(err));
+    },
     changePhoto() {}
   }
 };
