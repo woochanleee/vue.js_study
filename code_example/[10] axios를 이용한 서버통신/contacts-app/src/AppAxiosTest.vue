@@ -85,7 +85,17 @@ export default {
         .catch(err => console.log(err));
     },
     fetchContactOne() {
-      axios
+      /*
+        axios를 사용하면서 then()를 처리할 때는 콜백 함수로 화살표 함수를 사용할 것을 권장합니다.
+        데이터를 수신한 후에 Vue 인스턴스 내부의 데이터를 변경해야 하는 경우가 많은데, 데이터 옵션을
+        액세스하기 위해서는 this 객체가 Vue 인스턴스를 참조할 수 있어야 합니다. 따라서 화삺 함수를 사용해
+        바깥 this(Vue 인스턴스)를 참조할수 있게 됩니다. 만약 기본 function을 사용하면 바깥에 this를 변수에
+        할당시켜 놓고 콜백함수 안에서 그 변수를 사용해 수정해야 하는데 화살표 함수가 더 깔끔해 보입니다.
+
+        methods 옵션의 각 메서드는 화살표 함수를 사용하면 안됩니다. 메서드를 화살표 함수 형태로
+        작성하게 되면 메서드 내부에서의 this는 전역 객체를 가리키게 되기 때문입니다.
+      */
+      this.$axios
         .get(`/api/contacts/${this.no}`)
         .then(res => {
           console.log(res);
