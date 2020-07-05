@@ -178,7 +178,7 @@ select {
 }
 
 #list tr {
-  border-bottom: 1px solid blakc;
+  border-bottom: 1px solid black;
 }
 
 #list td,
