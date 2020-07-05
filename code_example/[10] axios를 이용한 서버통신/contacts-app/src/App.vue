@@ -29,7 +29,7 @@ export default {
   },
   data() {
     return {
-      currentView: null,
+      currentView: null, // null일 경우 component에 아무 컴포넌트도 나타나지 않는다.
       contact: {
         no: 0,
         name: '',
@@ -38,15 +38,92 @@ export default {
         photo: '',
       },
       contactList: {
-        pageNo: 1,
-        pageSize: CONF.PAGESIZE,
-        totalCount: 0,
+        pageno: 1,
+        pagesize: CONF.PAGESIZE,
+        totalcount: 0,
         contacts: [],
       },
     };
   },
   mounted() {},
-  methods: {},
+  methods: {
+    pageChanged(page) {
+      this.contactList.pageno = page;
+      this.fetchContacts();
+    },
+    fetchContacts() {
+      this.$axios
+        .get(CONF.FETCH, {
+          params: {
+            pageno: this.contactList.pageno,
+            pagesize: this.contactList.pagesize,
+          },
+        })
+        .then((res) => (this.contactList = res.data))
+        .catch((err) => {
+          console.log('fetchContacts faild', err);
+          this.contactList.contacts = [];
+        });
+    },
+    addContact(contact) {
+      this.$axios
+        .post(CONF.ADD, contact)
+        .then((res) => {
+          if (res.data.status === 'success') {
+            this.contactList.pageno = 1;
+            this.contactList.pageSize = CONF.PAGESIZE;
+            this.fetchContacts();
+          } else {
+            console.log('연락처 추가 실패 : ', res.data.message);
+          }
+        })
+        .catch((err) => console.log('addContact failed : ', err));
+    },
+    updateContact(contact) {
+      this.$axios
+        .put(CONF.UPDATE(contact.no), contact)
+        .then((res) => {
+          if (res.data.status === 'success') {
+            this.fetchContacts();
+          } else {
+            console.log('연락처 변경 실패 : ', res.data.message);
+          }
+        })
+        .catch((err) => console.log('updateContact failed : ', err));
+    },
+    fetchContactOne(no) {
+      this.$axios
+        .get(CONF.FETCH_ONE(no))
+        .then((res) => (this.contact = res.data))
+        .catch((err) => console.log('fetchContactOne failed : ', err));
+    },
+    deleteContact(no) {
+      this.$axios
+        .delete(CONF.DELETE(no))
+        .then((res) => {
+          if (res.data.status === 'success') {
+            this.fetchContacts();
+          } else {
+            console.log('연락처 삭제 실패 : ', res.data.message);
+          }
+        })
+        .catch((err) => console.log('delete failed : ', err));
+    },
+    updatePhoto(no, file) {
+      const data = new FormData();
+      data.append('photo', file);
+      this.$axios
+        .post(CONF.UPDATE_PHOTO(no), data)
+        .then((res) => {
+          if (res.data.status === 'success') {
+            this.fetchContacts();
+          } else {
+            console.log('연락처 사진 변경 실패 : ', res.data.message);
+          }
+        })
+        .catch((err) => console.log('updatePhoto failed : ', err));
+    },
+  },
 };
 </script>
 
