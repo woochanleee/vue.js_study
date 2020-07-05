@@ -9,11 +9,11 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
-    "bootstrap": "^4.5.0",
+    "bootstrap": "3.x.x",
     "core-js": "^3.6.5",
     "es6-promise": "^4.2.8",
     "vue": "^2.6.11",
-    "vuejs-paginate": "^2.1.0"
+    "vuejs-paginate": "1.x.x"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",
@@ -36,7 +36,9 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+      "no-console": "off"
+    }
   },
   "browserslist": [
     "> 1%",
