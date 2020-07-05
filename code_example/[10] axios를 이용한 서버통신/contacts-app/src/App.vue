@@ -45,7 +45,51 @@ export default {
       },
     };
   },
-  mounted() {},
+  mounted() {
+    this.fetchContacts();
+    eventBus.$on('cancle', () => {
+      this.currentView = null;
+    });
+
+    eventBus.$on('addSubmit', (contact) => {
+      this.addContact(contact);
+      this.currentView = null;
+    });
+
+    eventBus.$on('updateSubmit', (contact) => {
+      this.updateContact(contact);
+      this.currentView = null;
+    });
+
+    eventBus.$on('addContactForm', () => {
+      this.currentView = 'addContact';
+    });
+
+    eventBus.$on('editContactForm', (no) => {
+      this.fetchContactOne(no);
+      this.currentView = 'updateContact';
+    });
+
+    eventBus.$on('deleteContact', (no) => {
+      this.deleteContact(no);
+    });
+
+    eventBus.$on('editPhoto', (no) => {
+      this.fetchContactOne(no);
+      this.currentView = 'updatePhoto';
+    });
+
+    eventBus.$on('updatePhoto', (no, file) => {
+      if (typeof file !== 'undefined') {
+        this.updatePhoto(no, file);
+      }
+      this.currentView = null;
+    });
+
+    eventBus.$on('pageChanged', (page) => {
+      this.pageChanged(page);
+    });
+  },
   methods: {
     pageChanged(page) {
       this.contactList.pageno = page;
