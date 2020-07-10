@@ -53,7 +53,7 @@ ul li.checked::before {
 <template>
   <ul id="todo-list">
     <li
-      v-for="a in todolist"
+      v-for="a in todoList"
       v-bind:key="a.id"
       :class="checked(a.done)"
       v-on:click="doneToggle(a.id)"
@@ -66,40 +66,30 @@ ul li.checked::before {
 </template>
 
 <script>
-import eventBus from "../EventBus";
+import Constant from "../Constant";
 
 export default {
-  created() {
-    eventBus.$on("add-todo", this.addTodo);
+  name: "List",
+  computed: {
+    // todoList() {
+    //   return this.$store.state.todoList;
+    // }
   },
-  data: () => ({
-    todolist: [
-      { id: 1, todo: "영화보기", done: false },
-      { id: 2, todo: "주말 산책", done: true },
-      { id: 3, todo: "ES6 학습", done: false },
-      { id: 4, todo: "잠실 야구장", done: false }
-    ]
-  }),
+  data: function() {
+    return {
+      todoList: this.$store.state.todoList
+    };
+  },
   methods: {
     checked(done) {
       if (done) return { checked: true };
       else return { checked: false };
     },
-    addTodo(todo) {
-      if (todo !== "")
-        this.todolist.push({
-          id: new Date().getTime(),
-          todo,
-          done: false
-        });
-    },
     doneToggle(id) {
-      var index = this.todolist.findIndex(item => item.id === id);
-      this.todolist[index].done = !this.todolist[index].done;
+      this.$store.commit(Constant.DONE_TOGGLE, { id });
     },
     deleteTodo(id) {
-      var index = this.todolist.findIndex(item => item.id === id);
-      this.todolist.splice(index, 1);
+      this.$store.commit(Constant.DELETE_TOTO, { id });
     }
   }
 };
