@@ -33,15 +33,17 @@ input {
 </template>
 
 <script>
-import eventBus from "../EventBus";
+import Constant from "../Constant";
 
 export default {
   name: "input-todo",
   data: () => ({ todo: "" }),
   methods: {
     addTodo() {
-      eventBus.$emit("add-todo", this.todo);
-      this.todo = "";
+      // mutation을 발생할때 store.commit 이라는걸 쓰는구나!
+      this.$store.commit(Constant.ADD_TODO, {
+        todo: this.todo
+      });
     }
   }
 };
