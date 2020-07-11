@@ -1,11 +1,10 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import Constant from '../Constant';
-import _ from 'loadash';
 
 Vue.use(Vuex);
 
-const store = Vuex.Store({
+const store = new Vuex.Store({
   state: {
     currentRegion: 'all',
     countries: [
@@ -37,7 +36,14 @@ const store = Vuex.Store({
     },
     regions(state) {
       let temp = state.countries.map((c) => c.region);
-      temp = _.uniq(temp);
+      // temp = loadash.uniq(temp); // 에러나서 주석
+      /*
+        This dependency was not found:
+
+        * loadash in ./src/store/index.js
+
+        To install it, you can run: npm install --save loadash
+      */
       temp.splice(0, 0, 'all');
       return temp;
     },
