@@ -68,8 +68,8 @@ ul li.checked::before {
 
 <script>
 import Constant from "../Constant";
-import { mapState, mapMutations } from "vuex";
-// import { mapMutations } from "vuex";
+import { mapState } from "vuex";
+// import { mapMutations, mapActions } from "vuex";
 
 export default {
   name: "List",
@@ -107,7 +107,14 @@ export default {
       if (done) return { checked: true };
       else return { checked: false };
     },
-    ...mapMutations([Constant.DELETE_TOTO, Constant.DONE_TOGGLE])
+    deleteTodo(payload) {
+      this.$store.dispatch(Constant.DELETE_TOTO, payload);
+    },
+    doneToggle(payload) {
+      this.$store.dispatch(Constant.DONE_TOGGLE, payload);
+    }
+    // ...mapActions([Constant.DELETE_TOTO, Constants.DONE_TOGGLE])
+    // ...mapMutations([Constant.DELETE_TOTO, Constant.DONE_TOGGLE])
   }
 };
 /*
