@@ -1,24 +1,9 @@
 # contacts-app-search
 
-## Project setup
-```
-yarn install
-```
+## 액션의 기능
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+변이는 상태(state)와 페이로드(payload) 를 전달하지만, 액션은 저장소(store) 와 페이로드(payload) 를 전달하고 있어 **저장소 객체의 상태, 변이, 게터, 액션**을 모두 이용할 수 있다. 이 4가지 정보를 모두 이용할 수 있기 때문에 다음과 같은 작업이 가능하다.
 
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- 기존의 상태 정보를 이용해 액션을 수행할 수 있다.
+- 액션에서 여러 변이를 commit() 할 수 있다.
+- 액션에서 다른 액션을 dispatch() 할 수 있다.
