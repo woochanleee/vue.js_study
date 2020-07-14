@@ -60,7 +60,7 @@ const store = new Vuex.Store({
       console.log('###deleteTodo!!!', payload);
       store.commit(Constant.DELETE_TOTO, payload);
     },
-    [Constant.DONE_TOGGLE]: ({ state, commit }, payload) => {
+    [Constant.DONE_TOGGLE]: ({ commit }, payload) => {
       console.log('###doneToglle!!!', payload);
       commit(Constant.DONE_TOGGLE, payload);
     },
