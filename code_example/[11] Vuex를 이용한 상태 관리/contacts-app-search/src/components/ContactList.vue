@@ -41,10 +41,15 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+// import { mapState } from "vuex";
 
 export default {
-  name: 'contact-list',
-  computed: mapState(['contacts']),
+  name: "contact-list",
+  // computed: mapState(["contacts"])
+  computed: {
+    contacts() {
+      return this.$store.state.m1.contacts;
+    }
+  }
 };
 </script>
