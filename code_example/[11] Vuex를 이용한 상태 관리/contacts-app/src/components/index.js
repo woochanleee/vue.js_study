@@ -1,6 +1,5 @@
-import AddContact from './AddContact';
 import ContactList from './ContactList';
-import UpdateContact from './UpdateContact';
+import ContactForm from './ContactForm';
 import UpdatePhoto from './UpdatePhoto';
 
-export { AddContact, ContactList, UpdateContact, UpdatePhoto };
+export { ContactList, ContactForm, UpdatePhoto };
