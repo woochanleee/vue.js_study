@@ -17,7 +17,7 @@
           </tr>
         </thead>
         <tbody id="contacts">
-          <tr v-for="contact in contactList.contacts" :key="contact.no">
+          <tr v-for="contact in contacts.contacts" :key="contact.no">
             <td>{{ contact.name }}</td>
             <td>{{ contact.tel }}</td>
             <td>{{ contact.address }}</td>
@@ -57,7 +57,8 @@
 </template>
 
 <script>
-import eventBus from '../EventBus';
+import Constant from '../Constant';
+import { mapState } from 'vuex';
 import Paginate from 'vuejs-paginate';
 
 export default {
@@ -65,38 +66,39 @@ export default {
   components: {
     Paginate,
   },
-  props: ['contactList'],
   computed: {
     totalPage() {
       return (
-        Math.floor(
-          (this.contactList.totalcount - 1) / this.contactList.pagesize
-        ) + 1
+        Math.floor((this.contacts.totalcount - 1) / this.contacts.pagesize) + 1
       );
     },
+    ...mapState(['contacts']),
   },
   watch: {
     ['contactList.pageno']: function() {
       this.$refs.pageButtons.selected = this.contactList.pageno - 1;
     },
   },
+  mounted() {
+    this.$store.dispatch(Constant.FETCH_CONTACTS, { pageNo: 1 });
+  },
   methods: {
     pageChanged(page) {
-      eventBus.$emit('pageChanged', page);
+      this.$store.dispatch(Constant.FETCH_CONTACTS, { pageNo: page });
     },
     addContact() {
-      eventBus.$emit('addContactForm');
+      this.$store.dispatch(Constant.ADD_CONTACT_FORM);
     },
     editContact(no) {
-      eventBus.$emit('editContactForm', no);
+      this.$store.dispatch(Constant.EDIT_CONTACT_FORM, { no });
     },
     deleteContact(no) {
       if (confirm('정말로 삭제하시겠습니까?') === true) {
-        eventBus.$emit('deleteContact', no);
+        this.$store.dispatch(Constant.DELETE_CONTACT, { no });
       }
     },
     editPhoto(no) {
-      eventBus.$emit('editPhoto', no);
+      this.$store.dispatch(Constant.EDIT_PHOTO_FORM, { no });
     },
   },
 };
