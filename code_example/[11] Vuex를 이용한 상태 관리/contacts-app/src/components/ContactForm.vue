@@ -57,31 +57,11 @@
 </template>
 
 <script>
-import eventBus from '../EventBus';
+import Constant from '../Constant';
+import { mapState } from 'vuex';
 
 export default {
   name: 'contactForm',
-  props: {
-    mode: {
-      type: String,
-      default: 'add',
-    },
-    contact: {
-      type: Object,
-      default: function() {
-        return {
-          no: '',
-          name: '',
-          tel: '',
-          address: '',
-          photo: '',
-        };
-      },
-    },
-  },
-  mounted() {
-    this.$refs.name.focus();
-  },
   computed: {
     btnText() {
       if (this.mode === 'update') return '수 정';
@@ -91,17 +71,21 @@ export default {
       if (this.mode === 'update') return '연락처 변경';
       else return '새로운 연락처 추가';
     },
+    ...mapState(['mode', 'contact']),
+  },
+  mounted() {
+    this.$refs.name.focus();
   },
   methods: {
     submitEvent() {
       if (this.mode === 'update') {
-        eventBus.$emit('updateSubmit', this.contact);
+        this.$store.dispatch(Constant.UPDATE_CONTACT);
       } else {
-        eventBus.$emit('addSubmit', this.contact);
+        this.$store.dispatch(Constant.ADD_CONTACT);
       }
     },
     cancleEvent() {
-      eventBus.$emit('cancle');
+      this.$store.dispatch(Constant.CANCEL_FORM);
     },
   },
 };
