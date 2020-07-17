@@ -45,6 +45,12 @@ export default {
     // $route 객체를 통하여 파라미터값을 얻을 수 있다. 근데 왜 여기선 no일까? App.vue를 보면 /:no로 등록을 해놨기 때문이다.
     this.no = parseInt(this.$route.params.no);
   },
+  watch: {
+    $route(to, from) {
+      console.log(to, from); // 왜 저자님은 인자를 두개받았을까 둘다 똑같은 객체이던데?
+      this.no = parseInt(to.params.no);
+    },
+  },
   computed: {
     contact() {
       const no = this.no;
