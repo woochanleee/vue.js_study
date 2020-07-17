@@ -27,6 +27,7 @@
 import Home from './components/Home';
 import About from './components/About';
 import Contacts from './components/Contacts';
+import ContactByNo from './components/ContactByNo';
 import VueRouter from 'vue-router';
 
 const router = new VueRouter({
@@ -48,6 +49,10 @@ const router = new VueRouter({
     {
       path: '/contacts',
       component: Contacts,
+    },
+    {
+      path: '/contacts/:no',
+      component: ContactByNo,
     },
   ],
 });
