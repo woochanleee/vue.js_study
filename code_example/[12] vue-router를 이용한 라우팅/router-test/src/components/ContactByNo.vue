@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>연락처 상세</h1>
+    <hr class="divider" />
     <div>
       <table class="detail table table-bordered">
         <tbody>
@@ -31,13 +31,13 @@
 </template>
 
 <script>
-import contactList from "../ContactList";
+import contactList from '../ContactList';
 
 export default {
-  name: "contactByNo",
+  name: 'contactByNo',
   data: () => ({
     no: 0,
-    contacts: contactList.contacts
+    contacts: contactList.contacts,
   }),
   created() {
     // this.$route.query.keyword 로 쿼리문자열 인 /user?keyword=test 에서 값을 얻을 수 있다.
@@ -48,16 +48,24 @@ export default {
   computed: {
     contact() {
       const no = this.no;
-      const arr = this.contacts.filter(item => item.no === no);
+      const arr = this.contacts.filter((item) => item.no === no);
       if (arr.length === 1) return arr[0];
       return {};
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style>
 table.detail {
   width: 400px;
+}
+
+.divider {
+  height: 3px;
+  margin: 0 auto;
+  background-color: #ff0066;
+  color: #ff0066;
+  border: 0 none;
 }
 </style>
