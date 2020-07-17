@@ -6,17 +6,19 @@
         <router-link :to="'/contacts/' + c.no">{{ c.name }}</router-link>
       </div>
     </div>
+    <router-view />
+    <!-- children에 해당하는 컴포넌트를 렌더링 할 수 있다. -->
   </div>
 </template>
 
 <script>
-import contactList from "../ContactList";
+import contactList from '../ContactList';
 
 export default {
-  name: "contacts",
+  name: 'contacts',
   data: () => ({
-    contacts: contactList.contacts
-  })
+    contacts: contactList.contacts,
+  }),
 };
 </script>
 
