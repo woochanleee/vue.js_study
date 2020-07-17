@@ -47,7 +47,8 @@ export default {
   },
   watch: {
     $route(to, from) {
-      console.log(to, from); // 왜 저자님은 인자를 두개받았을까 둘다 똑같은 객체이던데?
+      console.log(to, from); // 왜 저자님은 인자를 두개받았을까 둘다 똑같은 객체이던데? 아 책에 나와있엇넹
+      // to는 현재의 라우트 객체, from은 이전의 라우트 객체를 가리킨다고 한다. 여기선 to를 사용해야 함!
       this.no = parseInt(to.params.no);
     },
   },
