@@ -1,12 +1,48 @@
 <template>
   <div>
-    <h1>Contacts</h1>
-    <h3>{{ new Date().toTimeString() }}</h3>
+    <h1>연락처</h1>
+    <div class="wrapper">
+      <div class="box" v-for="c in contacts" v-bind:key="c.no">
+        <router-link :to="'/contacts/' + c.no">{{ c.name }}</router-link>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import contactList from "../ContactList";
+
 export default {
-  name: 'contacts',
+  name: "contacts",
+  data: () => ({
+    contacts: contactList.contacts
+  })
 };
 </script>
+
+<style scoped>
+.wrapper {
+  background-color: #ffffff;
+  clear: both;
+  display: table;
+}
+
+.box {
+  float: left;
+  background-color: aqua;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 3px;
+  text-align: center;
+  font-size: 120%;
+  width: 100%;
+  font-weight: bold;
+}
+
+a:link,
+a:visited {
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+</style>
