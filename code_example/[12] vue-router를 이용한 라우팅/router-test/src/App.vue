@@ -51,7 +51,7 @@ const router = new VueRouter({
       component: Contacts,
       children: [
         {
-          path: ':no',
+          path: ':no', // /:no 이렇게하면 동작을 안한다 ㅋㅋ
           component: ContactByNo,
         },
       ],
