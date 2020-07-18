@@ -4,9 +4,7 @@
     <div class="wrapper">
       <div class="box" v-for="c in contacts" v-bind:key="c.no">
         <!-- { query: { pageno: 2 } } 쿼리도 당연히 가능 -->
-        <router-link :to="{ name: 'contactByNo', params: { no: c.no } }">{{
-          c.name
-        }}</router-link>
+        <span @click="navigate(c.no)">[ {{ c.name }} ]</span>
       </div>
     </div>
     <router-view />
@@ -15,13 +13,25 @@
 </template>
 
 <script>
-import contactList from '../ContactList';
+import contactList from "../ContactList";
 
 export default {
-  name: 'contacts',
+  name: "contacts",
   data: () => ({
-    contacts: contactList.contacts,
+    contacts: contactList.contacts
   }),
+  methods: {
+    navigate(no) {
+      if (confirm("상세 정보를 보시겠습니까?")) {
+        // this.$router.push("/contacts/" + no); // 이렇게도 동작한다!
+        // this.$router.push(location, [, completeCallback] [, abortCallback])
+        // 성공, 실패했을때 처리할 콜백을 넣어줄 수 있다.
+        this.$router.push({ name: "contactByNo", params: { no } }, () =>
+          console.log(`/contacts/${no} 로 이동 완료!`)
+        );
+      }
+    }
+  }
 };
 </script>
 
