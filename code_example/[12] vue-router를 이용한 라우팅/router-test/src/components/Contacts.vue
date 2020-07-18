@@ -3,7 +3,10 @@
     <h1>연락처</h1>
     <div class="wrapper">
       <div class="box" v-for="c in contacts" v-bind:key="c.no">
-        <router-link :to="'/contacts/' + c.no">{{ c.name }}</router-link>
+        <!-- { query: { pageno: 2 } } 쿼리도 당연히 가능 -->
+        <router-link :to="{ name: 'contactByNo', params: { no: c.no } }">{{
+          c.name
+        }}</router-link>
       </div>
     </div>
     <router-view />
