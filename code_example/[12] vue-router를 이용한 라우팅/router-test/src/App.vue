@@ -30,6 +30,13 @@ import Contacts from './components/Contacts';
 import ContactByNo from './components/ContactByNo';
 import VueRouter from 'vue-router';
 
+/*
+  명명된 라우트(Named Routes):
+  라우트 정보에 고유한 이름을 부여하는 것이다. 이것을 사용할 경우 URI 경로가 아닌 부여된 라우트 이름(Route Name)
+  으로 내비게이션하도록 할 수 있다. 복잡한 URI 경로가 만들어질 때 전체 경로(path) 를 입력해야 하지만 명명된 라우트
+  를 사용하면 좀 더 간단하게 입력할 수 있다. 또한 URI 경로가 바뀓라도 애플리캐이션에서의 내비게이션 정보는 바뀌지 않는다.
+*/
+
 const router = new VueRouter({
   routes: [
     {
@@ -38,27 +45,27 @@ const router = new VueRouter({
     },
     {
       path: '/home',
+      name: 'home',
       component: Home,
     },
 
     {
       path: '/about',
+      name: 'about', // name 옵션은 필수 지정 항목은 아니지만 각각의 라우트 정보마다 고유한 값을 지정해야 한다.
       component: About,
     },
 
     {
       path: '/contacts',
+      name: 'contacts',
       component: Contacts,
       children: [
         {
           path: ':no', // /:no 이렇게하면 동작을 안한다 ㅋㅋ
+          name: 'contactByNo',
           component: ContactByNo,
         },
       ],
-    },
-    {
-      path: '/contacts/:no',
-      component: ContactByNo,
     },
   ],
 });
