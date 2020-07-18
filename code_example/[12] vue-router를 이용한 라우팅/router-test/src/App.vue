@@ -5,13 +5,15 @@
       <nav>
         <ul>
           <li>
-            <router-link to="/home">Home</router-link>
+            <router-link :to="{ name: 'home' }">Home</router-link>
+            <!-- name: ''를 설정해주면 이에 해당하는 라우트 정보를 찾아 그 path로 설정해준다. 여기서는 /home -->
           </li>
           <li>
-            <router-link to="/about">About</router-link>
+            <router-link v-bind:to="{ name: 'about' }">About</router-link>
+            <!-- 객체를 바인딩 하므로 v-bind 디렉티르를 이용한다. -->
           </li>
           <li>
-            <router-link to="/contacts">Contacts</router-link>
+            <router-link :to="{ name: 'contacts' }">Contacts</router-link>
             <!-- 근데 왜 개발자 도구로 보면 #/contacts 이런식으로 등록이 돼있을까? 궁금하넹... -->
           </li>
         </ul>
