@@ -66,10 +66,29 @@ const router = new VueRouter({
           path: ':no', // /:no 이렇게하면 동작을 안한다 ㅋㅋ
           name: 'contactByNo',
           component: ContactByNo,
+          beforeEnter(to, from, next) {
+            console.log('@@ beforeEnter! : ' + from.path + '-->' + to.path);
+            if (from.path.startsWith('/contacts')) return next();
+            next('/home');
+          },
         },
       ],
     },
   ],
+});
+
+/*
+  애플리케이션의 인증 처리에 내비게이션 보호 기능을 사용할 수 있다.
+  전역 내비게이션 보호 메서드인 beforeEach() 에서 사용자의 인증 여부를 확인하고
+  인증하지 않았거나 접근 권한이 없다면 로그인화면으로 전환시키도록 next() 메서드를 이용할 수 있다.
+*/
+router.beforeEach((to, from, next) => {
+  console.log('** beforeEach!!');
+  next(); // 호출해야 다음 훅으로 진행된다.
+});
+
+router.afterEach(() => {
+  console.log('** afterEach!!');
 });
 
 export default {
