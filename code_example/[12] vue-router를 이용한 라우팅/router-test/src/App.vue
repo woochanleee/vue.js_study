@@ -30,6 +30,7 @@ import Home from './components/Home';
 import About from './components/About';
 import Contacts from './components/Contacts';
 import ContactByNo from './components/ContactByNo';
+import NotFound from './components/NotFound';
 import VueRouter from 'vue-router';
 
 /*
@@ -87,6 +88,10 @@ const router = new VueRouter({
           },
         },
       ],
+    },
+    {
+      path: '*', // '/*' 이렇게 해도 되긴 하네 ** 이것도, */ 이것도 ***/*** 이것도, *asfs 이건 안됨
+      component: NotFound,
     },
   ],
 });
