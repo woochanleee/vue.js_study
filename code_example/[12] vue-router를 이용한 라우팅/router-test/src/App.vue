@@ -70,6 +70,12 @@ const router = new VueRouter({
       path: '/about',
       name: 'about', // name 옵션은 필수 지정 항목은 아니지만 각각의 라우트 정보마다 고유한 값을 지정해야 한다.
       component: About,
+      children: [
+        {
+          path: '/test',
+          component: About, // 이렇게 하게되면 http://localhost:8080/test 로 접속시 About 컴포넌트가 보인다!
+        },
+      ],
     },
 
     {
