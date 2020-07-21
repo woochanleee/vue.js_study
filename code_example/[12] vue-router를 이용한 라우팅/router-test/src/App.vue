@@ -87,11 +87,16 @@ const router = new VueRouter({
           path: ':no', // /:no 이렇게하면 동작을 안한다 ㅋㅋ
           name: 'contactByNo',
           component: ContactByNo,
-          beforeEnter(to, from, next) {
-            console.log('@@ beforeEnter! : ' + from.path + '-->' + to.path);
-            if (from.path.startsWith('/contacts')) return next();
-            next('/home');
-          },
+          props: true, // route.prams 정보를 동일한 속성(props)에 전달 됨
+          /*
+            만약 /contactbyno?no=1004 와 같이 쿼리 형태로 온다면?
+            function connectQueryToProp(route) {
+              return { no: route.query.no, path: route.path };
+            }
+
+            props: connectQueryToProp
+            처럼 함수를 할당시키면 된다.
+          */
         },
       ],
     },
