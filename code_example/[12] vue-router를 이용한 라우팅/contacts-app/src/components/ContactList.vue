@@ -1,9 +1,7 @@
 <template>
   <div>
     <p class="add-new">
-      <button class="btn btn-primary" @click="addContact">
-        새로운 연락처 추가하기
-      </button>
+      <router-link class="btn btn-primary" v-bind:to="{ name: 'addContact' }">새로운 연락처 추가하기</router-link>
     </p>
     <div id="example">
       <table id="list" class="table table-striped table-bordered table-hover">
@@ -39,20 +37,19 @@
           </tr>
         </tbody>
       </table>
-      <div>
-        <paginate
-          ref="pageButtons"
-          :page-count="totalPage"
-          :page-range="7"
-          :margin-pages="3"
-          :click-handler="pageChanged"
-          :prev-text="'이전'"
-          :next-text="'다음'"
-          :container-class="'pagination'"
-          :page-class="'page-item'"
-        ></paginate>
-      </div>
     </div>
+    <paginate
+      ref="pageButtons"
+      :page-count="totalPage"
+      :page-range="7"
+      :margin-pages="3"
+      :click-handler="pageChanged"
+      :prev-text="'이전'"
+      :next-text="'다음'"
+      :container-class="'pagination'"
+      :page-class="'page-item'"
+    ></paginate>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -74,31 +71,38 @@ export default {
     },
     ...mapState(['contacts']),
   },
-  watch: {
-    ['contactList.pageno']: function() {
-      this.$refs.pageButtons.selected = this.contactList.pageno - 1;
-    },
-  },
   mounted() {
-    this.$store.dispatch(Constant.FETCH_CONTACTS, { pageNo: 1 });
+    let page = 1;
+    if (this.$route.query && this.$route.query.page) {
+      page = parseInt(this.$route.query.page);
+    }
+    this.$store.dispatch(Constant.FETCH_CONTACTS, { pageNo: page });
+    this.$refs.pageButtons.selected = page - 1;
+  },
+  watch: {
+    '$route': function(to) {
+      if (to.query.page && to.query.page !== this.contacts.pageno) {
+        const page = to.query.page;
+        this.$store.dispatch(Constant.FETCH_CONTACTS, { pageNo: page })
+        this.$refs.pageButtons.selected = page - 1;
+      }
+    },
   },
   methods: {
     pageChanged(page) {
-      this.$store.dispatch(Constant.FETCH_CONTACTS, { pageNo: page });
-    },
-    addContact() {
-      this.$store.dispatch(Constant.ADD_CONTACT_FORM);
+      this.$router.push({ name: 'contacts', query: { page } })
     },
     editContact(no) {
-      this.$store.dispatch(Constant.EDIT_CONTACT_FORM, { no });
+      this.$router.push({ name: 'updateContact', params: { no } })
     },
     deleteContact(no) {
       if (confirm('정말로 삭제하시겠습니까?') === true) {
         this.$store.dispatch(Constant.DELETE_CONTACT, { no });
+        this.$router.push({ name: 'contacts' })
       }
     },
     editPhoto(no) {
-      this.$store.dispatch(Constant.EDIT_PHOTO_FORM, { no });
+      this.$router.push({ name: 'updatePhoto', params: { no } })
     },
   },
 };
