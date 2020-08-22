@@ -15,6 +15,9 @@ export default {
       tel: '',
       address: '',
       photo: '',
-    }
+    };
+  },
+  [Constant.CHANGE_ISLOADING]: (state, payload) => {
+    state.isLoading = payload.isLoading;
   }
 };
