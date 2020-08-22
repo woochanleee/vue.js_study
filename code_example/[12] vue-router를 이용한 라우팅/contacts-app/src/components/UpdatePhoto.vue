@@ -35,7 +35,7 @@
             type="button"
             class="btn btn-danger"
             value="취 소"
-            @click="cancleEvent"
+            @click="cancelEvent"
           />
         </div>
       </form>
@@ -49,10 +49,14 @@ import { mapState } from 'vuex';
 
 export default {
   name: 'updatePhoto',
-  computed: mapState(['contact']),
+  props: ['no'],
+  computed: mapState(['contact', 'contacts']),
+  mounted() {
+    this.$store.dispatch(Constant.FETCH_CONTACT_ONE, { no: this.no })
+  },
   methods: {
-    cancleEvent() {
-      this.$store.dispatch(Constant.CANCEL_FORM);
+    cancelEvent() {
+      this.$router.push({  name: 'contacts', query: { page: this.contacts.pageno } });
     },
     photoSubmit() {
       const file = this.$refs.photoFile.files[0];
@@ -60,6 +64,7 @@ export default {
         no: this.contact.no,
         file,
       });
+      this.$router.push({ name: 'contacts', query: { page: this.contacts.pageno } });
     },
   },
 };
