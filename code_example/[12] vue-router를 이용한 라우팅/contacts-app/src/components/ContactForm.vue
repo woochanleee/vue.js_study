@@ -1,6 +1,6 @@
 <template>
   <div class="modal">
-    <div class="form" @keyup.esc="cancleEvent">
+    <div class="form" @keyup.esc="cancelEvent">
       <h3 class="heading">:: {{ headingText }}</h3>
       <div v-if="mode === 'update'" class="form-group">
         <label for="no">일련련번호</label>
@@ -49,7 +49,7 @@
           type="button"
           class="btn btn-danger"
           value="취소"
-          @click="cancleEvent"
+          @click="cancelEvent"
         />
       </div>
     </div>
@@ -62,6 +62,10 @@ import { mapState } from 'vuex';
 
 export default {
   name: 'contactForm',
+  data() {
+    return { mode: 'add' }
+  },
+  props: ['no'],
   computed: {
     btnText() {
       if (this.mode === 'update') return '수 정';
@@ -71,21 +75,31 @@ export default {
       if (this.mode === 'update') return '연락처 변경';
       else return '새로운 연락처 추가';
     },
-    ...mapState(['mode', 'contact']),
+    ...mapState(['contacts', 'contact']),
   },
   mounted() {
     this.$refs.name.focus();
+    const cr = this.$router.currentRoute;
+    if (cr.fullPath.indexOf('/add') > -1) {
+      this.mode = 'add';
+      this.$store.dispatch(Constant.INITIALIZE_CONTACT_ONE);
+    } else if (cr.fullPath.indexOf('/update') > -1) {
+      this.mode = 'update';
+      this.$store.dispatch(Constant.FETCH_CONTACT_ONE, { no: this.no });
+    }
   },
   methods: {
     submitEvent() {
       if (this.mode === 'update') {
         this.$store.dispatch(Constant.UPDATE_CONTACT);
+        this.$router.push({ name: 'contacts', query: { page: this.contacts.pageno } });
       } else {
         this.$store.dispatch(Constant.ADD_CONTACT);
+        this.$router.push({ name: 'contacts', query: { page: 1 } });
       }
     },
-    cancleEvent() {
-      this.$store.dispatch(Constant.CANCEL_FORM);
+    cancelEvent() {
+      this.$router.push({ name: 'contacts', query: { page: this.contacts.pageno } });
     },
   },
 };

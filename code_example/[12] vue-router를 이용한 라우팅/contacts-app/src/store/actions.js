@@ -33,7 +33,7 @@ export default {
     });
   },
   [Constant.UPDATE_CONTACT]: (store) => {
-    const currentPageNo = store.state.contacts.pageNo;
+    const currentPageNo = store.state.contacts.pageno;
     const contact = store.state.contact;
     axios.put(CONF.UPDATE(contact.no), contact).then((res) => {
       if (res.data.status === 'success') {
