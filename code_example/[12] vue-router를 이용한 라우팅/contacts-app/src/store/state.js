@@ -1,6 +1,7 @@
 import CONF from '../Config';
 
 export default {
+  isLoading: false,
   contact: {
     no: 0,
     name: '',
