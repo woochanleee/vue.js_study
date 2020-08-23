@@ -1,7 +1,9 @@
 <template>
   <div>
     <p class="add-new">
-      <router-link class="btn btn-primary" v-bind:to="{ name: 'addContact' }">새로운 연락처 추가하기</router-link>
+      <router-link class="btn btn-primary" v-bind:to="{ name: 'addContact' }"
+        >새로운 연락처 추가하기</router-link
+      >
     </p>
     <div id="example">
       <table id="list" class="table table-striped table-bordered table-hover">
@@ -49,7 +51,9 @@
       :container-class="'pagination'"
       :page-class="'page-item'"
     ></paginate>
-    <router-view></router-view>
+    <transition @before-enter="beforeEnter" @enter="enter" v-on:leave="leave">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -57,6 +61,7 @@
 import Constant from '../Constant';
 import { mapState } from 'vuex';
 import Paginate from 'vuejs-paginate';
+import Velocity from 'velocity-animate';
 
 export default {
   name: 'contactList',
@@ -80,29 +85,47 @@ export default {
     this.$refs.pageButtons.selected = page - 1;
   },
   watch: {
-    '$route': function(to) {
+    $route: function(to) {
       if (to.query.page && to.query.page !== this.contacts.pageno) {
         const page = to.query.page;
-        this.$store.dispatch(Constant.FETCH_CONTACTS, { pageNo: page })
+        this.$store.dispatch(Constant.FETCH_CONTACTS, { pageNo: page });
         this.$refs.pageButtons.selected = page - 1;
       }
     },
   },
   methods: {
     pageChanged(page) {
-      this.$router.push({ name: 'contacts', query: { page } })
+      this.$router.push({ name: 'contacts', query: { page } });
     },
     editContact(no) {
-      this.$router.push({ name: 'updateContact', params: { no } })
+      this.$router.push({ name: 'updateContact', params: { no } });
     },
     deleteContact(no) {
       if (confirm('정말로 삭제하시겠습니까?') === true) {
         this.$store.dispatch(Constant.DELETE_CONTACT, { no });
-        this.$router.push({ name: 'contacts' })
+        this.$router.push({ name: 'contacts' });
       }
     },
     editPhoto(no) {
-      this.$router.push({ name: 'updatePhoto', params: { no } })
+      this.$router.push({ name: 'updatePhoto', params: { no } });
+    },
+    beforeEnter(el) {
+      el.style.opacity = 0;
+    },
+    enter(el, done) {
+      Velocity(el, { opacity: 0, scale: 0.2 }, { duration: 200 });
+      Velocity(el, { opacity: 0.7, scale: 1.2 }, { duration: 200 });
+      Velocity(el, { opacity: 1, scale: 1 }, { complete: done });
+    },
+    leave(el, done) {
+      Velocity(el, { translateX: '0px', opacity: 1 }, { duration: 100 });
+      Velocity(
+        el,
+        { translateX: '20px', opacity: 1 },
+        { duration: 100, loop: 2 }
+      );
+      Velocity(el, { translateX: '0px', opacity: 1 }, { duration: 200 });
+      Velocity(el, { translateX: '100px', opacity: 0 }, { complete: done });
     },
   },
 };

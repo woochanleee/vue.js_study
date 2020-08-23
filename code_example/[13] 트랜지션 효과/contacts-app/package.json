@@ -12,6 +12,7 @@
     "bootstrap": "3.x.x",
     "core-js": "^3.6.5",
     "es6-promise": "^4.2.8",
+    "velocity-animate": "1.5.1",
     "vue": "^2.6.11",
     "vue-router": "^3.4.3",
     "vue-simple-spinner": "^1.2.10",
