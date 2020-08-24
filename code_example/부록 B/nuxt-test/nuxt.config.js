@@ -7,4 +7,5 @@ module.exports = {
       },
     ],
   },
+  css: ['assets/transition.css'],
 };
