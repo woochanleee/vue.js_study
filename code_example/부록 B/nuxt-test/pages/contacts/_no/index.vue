@@ -1,5 +1,6 @@
 <template>
   <div>
+    <hr class="divider" />
     <h1>연락처 상세</h1>
     <div>
       <table class="detail table table-bordered">
@@ -29,6 +30,7 @@
 <script>
 import { mapGetters } from "vuex";
 import Constant from "~/constant";
+
 export default {
   name: "contactbyno",
   computed: mapGetters({
@@ -37,6 +39,11 @@ export default {
   created: function() {
     var no = this.$route.params.no;
     this.$store.commit(Constant.CHANGE_NO, { no: no });
+  },
+  beforeRouteUpdate(to, from, next) {
+    const no = to.params.no;
+    this.$store.commit(Constant.CHANGE_NO, { no });
+    next();
   }
 };
 </script>
@@ -44,5 +51,13 @@ export default {
 <style>
 table.detail {
   width: 400px;
+}
+.divider {
+  height: 3px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #ff0066;
+  color: #ff0066;
+  border: 0 none;
 }
 </style>
