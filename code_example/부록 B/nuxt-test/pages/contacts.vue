@@ -6,6 +6,7 @@
         <nuxt-link v-bind:to="'/contacts/'+c.no">{{c.name}}</nuxt-link>
       </div>
     </div>
+    <nuxt-child />
   </div>
 </template>
 <script>
